@@ -11,7 +11,7 @@ export default function LearnIndex() {
     <div className="page-section pb-28 md:pb-12">
       <div className="max-w-4xl mx-auto">
         <div className="mb-10 text-center">
-          <p className="label-overline text-mango-text mb-3">HonestSIP Masterclass</p>
+          <p className="label-overline text-primary mb-3">HonestSIP Masterclass</p>
           <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-4 leading-tight">
             The Rules of the Game
           </h1>
@@ -25,18 +25,18 @@ export default function LearnIndex() {
             <Link 
               key={chapter.id} 
               to={`/learn/${chapter.id}`}
-              className="group section-card hover:border-[rgba(255,183,125,0.4)] transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between"
+              className="group section-card hover:border-primary/40 transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between"
               style={{ minHeight: '180px' }}
             >
-              <div className="absolute top-[-20%] right-[-5%] p-4 opacity-[0.03] font-serif text-[12rem] italic leading-none pointer-events-none group-hover:opacity-10 transition-opacity text-mango-text">
+              <div className="absolute top-[-20%] right-[-5%] p-4 opacity-[0.03] font-serif text-[12rem] italic leading-none pointer-events-none group-hover:opacity-10 transition-opacity text-primary">
                 {idx + 1}
               </div>
               <div>
-                <p className="label-overline text-mango-text mb-3">Chapter {idx + 1}</p>
+                <p className="label-overline text-primary mb-3">Chapter {idx + 1}</p>
                 <h2 className="font-serif text-2xl text-on-surface mb-2 relative z-10">{chapter.title}</h2>
                 <p className="text-sm text-on-surface-var leading-relaxed mb-6 relative z-10">{chapter.byline}</p>
               </div>
-              <div className="text-xs font-bold uppercase tracking-wider text-[rgba(255,183,125,0.7)] group-hover:text-mango-text transition-colors mt-auto relative z-10">
+              <div className="text-xs font-bold uppercase tracking-wider text-primary/70 group-hover:text-primary transition-colors mt-auto relative z-10">
                 Start Chapter →
               </div>
             </Link>

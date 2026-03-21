@@ -1,34 +1,36 @@
 /** @type {import('tailwindcss').Config} */
+// trigger tailwind rebuild
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: ['class', '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
         // Surface hierarchy
-        surface:             '#131313',
-        'surface-lowest':    '#0e0e0e',
-        'surface-low':       '#1c1b1b',
-        'surface-high':      '#2a2a2a',
-        'surface-highest':   '#353534',
+        surface:             'rgb(var(--color-surface) / <alpha-value>)',
+        'surface-lowest':    'rgb(var(--color-surface-lowest) / <alpha-value>)',
+        'surface-low':       'rgb(var(--color-surface-low) / <alpha-value>)',
+        'surface-high':      'rgb(var(--color-surface-high) / <alpha-value>)',
+        'surface-highest':   'rgb(var(--color-surface-highest) / <alpha-value>)',
         // Mango suite
-        primary:             '#ffb77d',
-        'primary-container': '#ff8c00',
+        primary:             'rgb(var(--color-primary) / <alpha-value>)',
+        'primary-container': 'rgb(var(--color-primary-container) / <alpha-value>)',
         // Accents
-        secondary:           '#cebefa', // Lavender
-        tertiary:            '#bdcca3', // Pale Sage
+        secondary:           'rgb(var(--color-secondary) / <alpha-value>)', // Lavender
+        tertiary:            'rgb(var(--color-tertiary) / <alpha-value>)', // Pale Sage
         // Typography
-        'on-surface':        '#e5e2e1',
-        'on-surface-var':    '#ddc1ae',
-        'on-primary':        '#1a0a00',
+        'on-surface':        'rgb(var(--color-on-surface) / <alpha-value>)',
+        'on-surface-var':    'rgb(var(--color-on-surface-var) / <alpha-value>)',
+        'on-primary':        'rgb(var(--color-on-primary) / <alpha-value>)',
         // Borders
-        'outline-var':       '#564334',
+        'outline-var':       'rgb(var(--color-outline-var) / <alpha-value>)',
         // Semantic
-        success:             '#4caf82',
-        danger:              '#e05252',
-        warning:             '#f5c842',
+        success:             'rgb(var(--color-success) / <alpha-value>)',
+        danger:              'rgb(var(--color-danger) / <alpha-value>)',
+        warning:             'rgb(var(--color-warning) / <alpha-value>)',
       },
       fontFamily: {
         serif:  ['Newsreader', 'Georgia', 'serif'],

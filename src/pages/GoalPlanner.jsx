@@ -68,11 +68,7 @@ export default function GoalPlanner() {
               <button
                 key={key}
                 onClick={() => { setGoalType(key); setCustomCost(null); }}
-                className="text-left p-3 rounded-xl text-sm transition-all"
-                style={{
-                  background: goalType === key ? 'rgba(255,183,125,0.12)' : '#2a2a2a',
-                  border: goalType === key ? '1px solid rgba(255,183,125,0.3)' : '1px solid transparent',
-                }}
+                className={`text-left p-3 rounded-xl text-sm transition-all border ${goalType === key ? 'bg-primary/10 border-primary/30' : 'bg-surface-high border-transparent'}`}
               >
                 <span className="text-lg">{g.emoji}</span>
                 <p className="text-xs text-on-surface mt-1 font-medium leading-snug">{g.label}</p>

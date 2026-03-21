@@ -71,11 +71,11 @@ export default function RealWorldTranslation({
             <button
               key={item.id}
               onClick={() => setActive(isActive ? null : item.id)}
-              className="text-left rounded-xl p-3 transition-all"
-              style={{
-                background: isActive ? 'rgba(255,183,125,0.12)' : '#1c1b1b',
-                border: isActive ? '1px solid rgba(255,183,125,0.3)' : '1px solid transparent',
-              }}
+              className={`text-left rounded-xl p-3 transition-all border ${
+                isActive 
+                  ? 'bg-primary/10 border-primary/30' 
+                  : 'bg-surface-high border-transparent hover:bg-surface-highest/50'
+              }`}
             >
               <p className="text-xl mb-1">{item.icon}</p>
               <p className="font-serif text-lg mango-text leading-tight">

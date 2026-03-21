@@ -213,8 +213,8 @@ export default function ReverseSIP() {
 
       {/* Right — Results */}
       <section aria-label="Reverse SIP Results">
-        <div className="section-card mb-4">
-          <p className="label-overline text-on-surface-var mb-1">Required Monthly Commitment</p>
+        <div className="cta-card mb-4">
+          <p className="label-overline mb-1 opacity-90 text-white">Required Monthly Commitment</p>
           <p className="result-amount animate-result">{formatINR(results.flatSIP)}<span className="text-xl text-on-surface-var">/mo</span></p>
           <p className="text-xs text-on-surface-var mt-1 opacity-60">
             To reach {formatINRLakh(inflateGoal ? results.goalAdjusted : goal)} corpus in {years} years with {rate}% return
@@ -249,13 +249,15 @@ export default function ReverseSIP() {
 
         {/* Cost of Waiting — reverse variant */}
         {results.sipIncrease > 0 && (
-          <div className="cost-of-waiting mt-4">
-            <p className="label-overline mb-1 text-primary-container">⚡ Cost of Waiting</p>
-            <p className="text-sm text-on-surface leading-relaxed">
-              Starting 1 month later means your SIP must increase by{' '}
-              <span className="font-serif text-xl mango-text">{formatINR(results.sipIncrease)}</span>
-              /month to hit the same goal.
-            </p>
+          <div className="cost-of-waiting mt-8 flex gap-4">
+            <div className="text-warning text-2xl">⚠️</div>
+            <div>
+              <p className="label-overline mb-1 text-primary-container">Cost of Waiting</p>
+              <p className="text-sm text-on-surface leading-relaxed">
+                Delaying your start by just <strong>1 month</strong> increases your monthly requirement by{' '}
+                <span className="font-serif text-lg mango-text">+{formatINR(results.sipIncrease)}</span> to reach the same goal.
+              </p>
+            </div>
           </div>
         )}
 

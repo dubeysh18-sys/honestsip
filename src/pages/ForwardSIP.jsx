@@ -138,8 +138,8 @@ export default function ForwardSIP() {
           </p>
         </div>
 
-        <div className="section-card">
-          <p className="label-overline text-on-surface-var mb-2">{t('forwardSIP.res_maturity')}</p>
+        <div className="cta-card">
+          <p className="label-overline mb-2 opacity-90 text-white">{t('forwardSIP.res_maturity')}</p>
           <p className="result-amount animate-result">{formatINR(results.fvGross)}</p>
           <p className="text-xs text-on-surface-var mt-1 opacity-60">
             {t('forwardSIP.res_nominal', { years, rate })}

@@ -195,8 +195,7 @@ export default function OnTrack() {
               const isCurrent = Math.abs(m.age - age) < 5;
               return (
                 <div key={m.age}
-                  className="flex justify-between items-center py-2 px-3 rounded-lg"
-                  style={{ background: isCurrent ? 'rgba(255,183,125,0.08)' : 'transparent' }}>
+                  className={`flex justify-between items-center p-3 rounded-lg border ${isCurrent ? 'bg-primary/10 border-primary/20' : 'border-transparent'}`}>
                   <p className={`text-sm ${isCurrent ? 'mango-text font-semibold' : 'text-on-surface-var'}`}>
                     Age {m.age} {isCurrent ? '← You' : ''}
                   </p>

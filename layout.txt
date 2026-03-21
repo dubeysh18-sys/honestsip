@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import ThemeToggle from './ThemeToggle';
 
 const NAV_ITEMS = [
   { path: '/', icon: '📊', labelKey: 'menu.mobile.sip' },
@@ -36,40 +35,39 @@ export default function Layout({ children }) {
     document.documentElement.lang = i18n.language.split('-')[0];
   }, [i18n.language]);
 
-  React.useEffect(() => {
-    // Hydrate the theme globally on initial load to prevent 'flash of dark mode' 
-    // since ThemeToggle is unmounted until menu opens.
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  }, []);
-
   return (
-    <div className="min-h-screen text-on-surface transition-colors duration-300" style={{ backgroundColor: 'rgb(var(--color-surface))' }}>
+    <div className="min-h-screen" style={{ background: '#131313' }}>
       {/* Top Nav */}
       <header
-        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 py-4 backdrop-blur-md transition-colors duration-300"
-        style={{ backgroundColor: 'rgba(var(--color-surface), 0.95)' }}
+        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 py-4"
+        style={{ background: 'rgba(19,19,19,0.95)', backdropFilter: 'blur(12px)' }}
       >
-        <Link to="/" className="flex items-center" aria-label="Home">
-          <div className="flex items-center gap-1.5 font-serif text-2xl font-bold tracking-tight text-on-surface">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6 text-primary">
-              <circle cx="12" cy="12" r="10" strokeOpacity="0.3" />
-              <path d="M12 2v20M2 12h20M12 12l8-8" strokeLinecap="round" />
-            </svg>
-            <span>Honest<span className="text-secondary opacity-80" style={{ color: 'rgb(var(--color-primary))', opacity: 1 }}>SIP</span></span>
+        <Link to="/" className="flex items-center">
+          <div style={{ height: '64px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+            <img
+              src="/src/assets/logo.png"
+              alt="HonestSIP Logo"
+              style={{
+                height: '160%',
+                width: 'auto',
+                mixBlendMode: 'screen',
+                filter: 'brightness(0.85) contrast(1.6) saturate(1.2)',
+                objectFit: 'contain',
+                objectPosition: 'left center',
+                transform: 'translateY(1%)'
+              }}
+            />
           </div>
         </Link>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="w-8 h-8 flex flex-col justify-center gap-1.5"
-            aria-label="Menu"
-          >
-            <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-          </button>
-        </div>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="w-8 h-8 flex flex-col justify-center gap-1.5"
+          aria-label="Menu"
+        >
+          <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+        </button>
       </header>
 
       {/* Slide-out menu */}
@@ -77,14 +75,14 @@ export default function Layout({ children }) {
         <div
           className="fixed inset-0 z-30"
           onClick={() => setMenuOpen(false)}
-          style={{ background: 'rgba(0,0,0,0.5)' }}
+          style={{ background: 'rgba(0,0,0,0.7)' }}
         >
           <nav
-            className="absolute top-0 right-0 h-full w-72 overflow-y-auto py-20 px-6 border-l border-outline-var/10 shadow-2xl"
-            style={{ background: 'rgb(var(--color-surface-low))' }}
+            className="absolute top-0 right-0 h-full w-72 overflow-y-auto py-20 px-6"
+            style={{ background: '#1c1b1b' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mb-6 pb-6 border-b border-outline-var/15">
+            <div className="mb-6 pb-6" style={{ borderBottom: '1px solid rgba(86,67,52,0.15)' }}>
               <p className="label-overline text-on-surface-var mb-3">Language / भाषा</p>
               <select
                 className="select-ghost"
@@ -113,12 +111,7 @@ export default function Layout({ children }) {
               </Link>
             ))}
 
-            <div className="mt-6 pt-6 flex items-center justify-between border-t border-outline-var/15">
-              <span className="text-on-surface-var font-sans text-sm">Appearance</span>
-              <ThemeToggle />
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-outline-var/15">
+            <div className="mt-8 pt-6" style={{ borderTop: '1px solid rgba(86,67,52,0.15)' }}>
               <p className="text-xs text-on-surface-var opacity-50 leading-relaxed">
                 {t('menu.disclaimer')}
               </p>

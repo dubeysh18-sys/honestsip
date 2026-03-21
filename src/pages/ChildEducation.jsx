@@ -82,11 +82,11 @@ export default function ChildEducation() {
               <button
                 key={c.id}
                 onClick={() => setCourse(c.id)}
-                className="w-full text-left p-3 rounded-xl transition-all flex justify-between items-center"
-                style={{
-                  background: course === c.id ? 'rgba(255,183,125,0.12)' : '#2a2a2a',
-                  border: course === c.id ? '1px solid rgba(255,183,125,0.3)' : '1px solid transparent',
-                }}
+                className={`w-full text-left p-3 rounded-xl transition-all flex justify-between items-center border ${
+                  course === c.id 
+                    ? 'bg-primary/10 border-primary/30' 
+                    : 'bg-surface-high border-transparent'
+                }`}
               >
                 <div>
                   <p className="text-sm text-on-surface font-medium">{c.label}</p>
