@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 /**
- * Editorial Select — Midnight Mango design language
+ * Editorial Select — Matches NumberInput styling
  *
  * Props:
  *   label    — overline label shown above the trigger
@@ -26,7 +26,7 @@ export default function Select({ label, value, onChange, options = [] }) {
   const selected = options.find((o) => o.value === value) || options[0];
 
   return (
-    <div className="mb-4" ref={ref} style={{ position: 'relative' }}>
+    <div className="mb-5" ref={ref} style={{ position: 'relative' }}>
       {label && (
         <p className="label-overline mb-2">{label}</p>
       )}
@@ -35,35 +35,19 @@ export default function Select({ label, value, onChange, options = [] }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        style={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          background: '#1c1b1b',
-          borderRadius: '1rem',
-          padding: '0.875rem 1.25rem',
-          border: open ? '1px solid rgba(255,183,125,0.25)' : '1px solid transparent',
-          transition: 'border-color 0.2s',
-          cursor: 'pointer',
-          textAlign: 'left',
-        }}
+        className={`w-full flex items-baseline justify-between border-b pb-1 transition-colors cursor-pointer text-left focus:outline-none ${open ? 'border-primary' : 'border-outline-var/20 hover:border-outline-var/50'}`}
       >
         <span
-          className="font-serif italic text-on-surface"
-          style={{ fontSize: '1.1rem', lineHeight: 1.2 }}
+          className="bg-transparent text-on-surface font-serif text-2xl"
+          style={{ fontFamily: 'Newsreader, Georgia, serif' }}
         >
           {selected?.label}
         </span>
-        {/* Chevron */}
         <span
+          className="mango-text text-lg"
           style={{
-            display: 'inline-block',
-            color: '#ffb77d',
-            fontSize: '0.75rem',
             transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.25s ease',
-            marginLeft: '0.75rem',
             flexShrink: 0,
           }}
         >
@@ -74,16 +58,11 @@ export default function Select({ label, value, onChange, options = [] }) {
       {/* Dropdown panel */}
       {open && (
         <div
+          className="absolute left-0 right-0 mt-3 rounded-xl z-50 overflow-hidden shadow-2xl animate-fade-in"
           style={{
-            position: 'absolute',
-            top: 'calc(100% + 0.25rem)',
-            left: 0,
-            right: 0,
+            top: '100%',
             background: '#2a2a2a',
-            borderRadius: '0.75rem',
-            zIndex: 50,
-            overflow: 'hidden',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.45)',
+            border: '1px solid rgba(255,255,255,0.1)',
           }}
         >
           {options.map((opt) => {
@@ -98,12 +77,12 @@ export default function Select({ label, value, onChange, options = [] }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '0.875rem 1.25rem',
+                  padding: '1rem 1.25rem',
                   background: isSelected ? 'rgba(255,183,125,0.08)' : 'transparent',
                   borderLeft: isSelected ? '2px solid #ffb77d' : '2px solid transparent',
                   borderTop: 'none',
                   borderRight: 'none',
-                  borderBottom: 'none',
+                  borderBottom: '1px solid rgba(255,255,255,0.02)',
                   cursor: 'pointer',
                   textAlign: 'left',
                   transition: 'background 0.15s',
@@ -117,15 +96,15 @@ export default function Select({ label, value, onChange, options = [] }) {
               >
                 <span>
                   <span
-                    className="font-serif italic text-on-surface"
-                    style={{ fontSize: '1rem', display: 'block', lineHeight: 1.2 }}
+                    className={`font-serif text-lg ${isSelected ? 'text-on-surface' : 'text-on-surface-var'}`}
+                    style={{ fontFamily: 'Newsreader, Georgia, serif', display: 'block', lineHeight: 1.2 }}
                   >
                     {opt.label}
                   </span>
                   {opt.sublabel && (
                     <span
                       className="label-overline text-on-surface-var"
-                      style={{ opacity: 0.5, display: 'block', marginTop: '0.15rem' }}
+                      style={{ opacity: 0.5, display: 'block', marginTop: '0.25rem' }}
                     >
                       {opt.sublabel}
                     </span>
@@ -133,8 +112,8 @@ export default function Select({ label, value, onChange, options = [] }) {
                 </span>
                 <span
                   style={{
-                    fontSize: '0.85rem',
-                    color: isSelected ? '#ffb77d' : 'rgba(221,193,174,0.35)',
+                    fontSize: '1rem',
+                    color: isSelected ? '#ffb77d' : 'rgba(221,193,174,0.3)',
                     marginLeft: '0.75rem',
                     flexShrink: 0,
                   }}

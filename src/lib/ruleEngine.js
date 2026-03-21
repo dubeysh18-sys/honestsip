@@ -155,10 +155,10 @@ export function taxEngine(fvGross, totalInvested, assetClass, holdingYears, slab
       // STCG: 20% flat + 4% cess (Budget 2024)
       tax = gains * 0.20 * 1.04;
     }
-  } else if (assetClass === 'debt') {
+  } else if (assetClass === 'debt' || assetClass === 'oil') {
     // Post Apr 2023: All gains at slab rate, no LTCG benefit
     tax = gains * slabRate;
-  } else if (assetClass === 'gold') {
+  } else if (assetClass === 'gold' || assetClass === 'real-estate') {
     if (holdingYears > 2) {
       // LTCG: 12.5% + 4% cess (Budget 2024)
       tax = gains * 0.125 * 1.04;
@@ -166,6 +166,9 @@ export function taxEngine(fvGross, totalInvested, assetClass, holdingYears, slab
       // STCG: slab rate
       tax = gains * slabRate;
     }
+  } else if (assetClass === 'bitcoin') {
+      // Flat 30% for Crypto in India + 4% cess, ignoring holding period
+      tax = gains * 0.30 * 1.04;
   }
 
   return {
@@ -416,6 +419,131 @@ export function formatINRLakh(amount) {
   if (abs >= 100000)   return (amount / 100000).toFixed(2) + ' L';
   if (abs >= 1000)     return (amount / 1000).toFixed(1) + ' K';
   return formatINR(amount);
+}
+
+// ---------------------------------------------------------------------------
+// 5. Corpus Erosion Waterfall Engine (PRD §5)
+// ---------------------------------------------------------------------------
+export function computeWaterfall({
+  sipAmount,
+  durationYears,
+  expectedGrossReturn, // e.g., 0.13
+  expectedNetReturn,   // e.g., 0.12
+  inflationRate = 0.06,
+  assetClass = 'equity',
+  lumpSum = 0,
+  stepUpRate = 0,
+  exitLoadPct = 0,
+  sttRate = 0.00001,
+  stampDutyRate = 0.00005,
+  income = 1000000,
+  taxSlabRate = 0.20
+}) {
+  const nMonths = durationYears * 12;
+  const iGross = monthlyRate(expectedGrossReturn);
+  const iNet = monthlyRate(expectedNetReturn);
+
+  // Step 1: Gross Corpus
+  let fvGross = 0;
+  if (stepUpRate > 0) {
+    fvGross = stepUpSIPFV(sipAmount, stepUpRate, expectedGrossReturn, durationYears) + lumpSumFV(lumpSum, iGross, nMonths);
+  } else {
+    fvGross = sipFV(sipAmount, iGross, nMonths) + lumpSumFV(lumpSum, iGross, nMonths);
+  }
+
+  const totalInvested = stepUpRate > 0 
+    ? totalInvestedStepUp(sipAmount, stepUpRate, durationYears) + lumpSum
+    : totalInvestedFlat(sipAmount, nMonths) + lumpSum;
+
+  // Step 2: Stamp Duty
+  const stampDuty = totalInvested * stampDutyRate;
+
+  // Step 3: Net Corpus & TER Drag
+  let fvNet = 0;
+  if (stepUpRate > 0) {
+    fvNet = stepUpSIPFV(sipAmount, stepUpRate, expectedNetReturn, durationYears) + lumpSumFV(lumpSum, iNet, nMonths);
+  } else {
+    fvNet = sipFV(sipAmount, iNet, nMonths) + lumpSumFV(lumpSum, iNet, nMonths);
+  }
+  const terDrag = fvGross - fvNet;
+
+  // Step 4: Exit Load
+  const exitLoad = fvNet * exitLoadPct;
+  const fvNetAfterExit = fvNet - exitLoad;
+
+  // Step 5: STT (Equity Only)
+  const isEquity = assetClass === 'equity';
+  const stt = isEquity ? (fvNetAfterExit * sttRate) : 0;
+  
+  const corpusBeforeTax = fvNetAfterExit - stt;
+
+  // Step 6 & 7 & 8: Capital Gains, Raw Tax, Cess, Surcharge
+  const taxData = taxEngine(corpusBeforeTax, totalInvested, assetClass, durationYears, taxSlabRate);
+  const gains = taxData.gains;
+  
+  let rawTax = 0;
+  let isLTCG = false;
+
+  if (assetClass === 'equity') {
+    isLTCG = durationYears > 1;
+    if (isLTCG) {
+      const taxableGains = Math.max(0, gains - 125000);
+      rawTax = taxableGains * 0.125;
+    } else {
+      rawTax = gains * 0.20;
+    }
+  } else if (assetClass === 'debt' || assetClass === 'oil') {
+    isLTCG = false;
+    rawTax = gains * taxSlabRate;
+  } else if (assetClass === 'gold' || assetClass === 'real-estate') {
+    isLTCG = durationYears > 2;
+    if (isLTCG) {
+      rawTax = gains * 0.125;
+    } else {
+      rawTax = gains * taxSlabRate;
+    }
+  } else if (assetClass === 'bitcoin') {
+    isLTCG = false;
+    rawTax = gains * 0.30;
+  }
+
+  let surcharge = 0;
+  if (income > 50000000) {
+    surcharge = rawTax * 0.25;
+  } else if (income > 20000000) {
+    surcharge = rawTax * 0.25;
+  } else if (income > 10000000) {
+    surcharge = rawTax * 0.15;
+  } else if (income > 5000000) {
+    surcharge = rawTax * 0.10;
+  }
+
+  const cess = (rawTax + surcharge) * 0.04;
+  const totalTaxAndCess = rawTax + cess + surcharge;
+  const postTaxCorpus = corpusBeforeTax - totalTaxAndCess;
+
+  // Step 10 & 11: Real Value & Inflation Erosion
+  const realValue = postTaxCorpus / Math.pow(1 + inflationRate, durationYears);
+  const inflationErosion = postTaxCorpus - realValue;
+
+  return {
+    grossCorpus: Math.round(fvGross),
+    stampDuty: Math.round(stampDuty),
+    terDrag: Math.round(terDrag),
+    corpusAfterFundCosts: Math.round(fvNet),
+    stt: Math.round(stt),
+    exitLoad: Math.round(exitLoad),
+    totalInvested: Math.round(totalInvested),
+    grossGains: Math.round(gains),
+    rawTax: Math.round(rawTax),
+    cess: Math.round(cess),
+    surcharge: Math.round(surcharge),
+    postTaxCorpus: Math.round(postTaxCorpus),
+    inflationErosion: Math.round(inflationErosion),
+    realTakeHome: Math.round(realValue),
+    isLTCG,
+    isEquity
+  };
 }
 
 // ---------------------------------------------------------------------------

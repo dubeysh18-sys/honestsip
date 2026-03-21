@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import SliderField from '../components/SliderField';
 import NumberInput from '../components/NumberInput';
 import CostOfWaiting from '../components/CostOfWaiting';
@@ -9,6 +10,7 @@ import {
 import { EDUCATION_COURSES } from '../lib/benchmarkData';
 
 export default function ChildEducation() {
+  const { t } = useTranslation();
   const [course, setCourse]   = useState('engineering-pvt');
   const [childAge, setChild]  = useState(2);
   const [rate, setRate]       = useState(12);
@@ -25,12 +27,9 @@ export default function ChildEducation() {
     const n = yearsToGoal * 12;
     const inf = courseInfo.inflation;
 
-    // Total 4-year fee inflated to when child starts college
     const inflatedFee = inflationAdjustedGoal(courseInfo.totalFee, inf, yearsToGoal);
-
     const lumpFV  = lumpSum > 0 ? lumpSum * Math.pow(1 + i, n) : 0;
     const netGoal = Math.max(0, inflatedFee - lumpFV);
-
     const flatSIP  = netGoal > 0 ? Math.ceil(reverseSIP(netGoal, i, n)) : 0;
     const stepSIP  = netGoal > 0 ? reverseStepUpSIP(netGoal, g, r, yearsToGoal) : 0;
     const cow      = flatSIP > 0 ? costOfWaiting(flatSIP, r, n) : 0;
@@ -41,20 +40,43 @@ export default function ChildEducation() {
 
   return (
     <div className="page-section pb-28 md:pb-12">
-      <section aria-label="Education Fund Inputs">
-        <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Education Legacy</p>
+      <div className="md:col-span-2 grid md:grid-cols-2 gap-8 mb-2">
+        <div>
+          <p className="label-overline text-on-surface-var mb-2">{t('childEdu.header_overline')}</p>
           <h1 className="font-serif text-4xl text-on-surface mb-3 leading-tight">
-            Child's Education<br />
-            <em className="italic">Fund Planner</em>
+            {t('childEdu.header_title1')}<br />
+            <em className="italic">{t('childEdu.header_title2')}</em>
           </h1>
           <p className="text-sm text-on-surface-var leading-relaxed">
-            Course-specific defaults with {results.annualInfRate}% education inflation. Every year of delay compounds the gap.
+            {t('childEdu.header_desc', { rate: results.annualInfRate })}
           </p>
         </div>
 
-        <div className="section-card mb-4">
-          <p className="label-overline mb-3">Select Course</p>
+        <div className="section-card">
+          <p className="label-overline text-on-surface-var mb-1">{t('childEdu.req_sip')}</p>
+          <p className="result-amount animate-result">
+            {formatINR(results.flatSIP)}<span className="text-xl text-on-surface-var">/mo</span>
+          </p>
+          <p className="text-xs text-on-surface-var mt-1 opacity-60">
+            {t('childEdu.req_desc', { course: courseInfo.label, years: yearsToGoal })}
+          </p>
+
+          <div className="grid grid-cols-2 gap-3 mt-5">
+            <div className="inner-card">
+              <p className="label-overline text-on-surface-var mb-1">{t('childEdu.with_stepup', { stepup: stepUp })}</p>
+              <p className="result-amount-sm mango-text">{formatINR(results.stepSIP)}<span className="text-sm text-on-surface-var">/mo</span></p>
+            </div>
+            <div className="inner-card">
+              <p className="label-overline lavender-text mb-1">{t('childEdu.future_fee', { rate: results.annualInfRate })}</p>
+              <p className="result-amount-sm lavender-text">{formatINRLakh(results.inflatedFee)}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section aria-label="Education Fund Inputs">
+        <div className="section-card mb-4 mt-2 md:mt-0">
+          <p className="label-overline mb-3">{t('childEdu.select_course')}</p>
           <div className="space-y-2 mb-5">
             {EDUCATION_COURSES.map(c => (
               <button
@@ -80,7 +102,7 @@ export default function ChildEducation() {
           </div>
 
           <div className="mb-5">
-            <p className="label-overline mb-2">Child's Current Age</p>
+            <p className="label-overline mb-2">{t('childEdu.child_age')}</p>
             <SliderField
               label=""
               value={childAge}
@@ -90,15 +112,15 @@ export default function ChildEducation() {
               onChange={setChild}
             />
             <p className="text-xs text-on-surface-var opacity-50 mt-1">
-              Investment horizon: {yearsToGoal} years (until age 18)
+              {t('childEdu.inv_horizon', { years: yearsToGoal })}
             </p>
           </div>
 
-          <SliderField label="Expected Return" value={rate} min={1} max={20} unit="%" onChange={setRate} />
-          <SliderField label="Annual Step-Up" value={stepUp} min={0} max={25} unit="%" onChange={setStepUp} />
+          <SliderField label={t('childEdu.expected_return')} value={rate} min={1} max={20} unit="%" onChange={setRate} />
+          <SliderField label={t('childEdu.annual_stepup')} value={stepUp} min={0} max={25} unit="%" onChange={setStepUp} />
 
           <NumberInput
-            label="Existing Savings for Education"
+            label={t('childEdu.existing_savings')}
             value={lumpSum}
             onChange={setLumpSum}
           />
@@ -106,38 +128,18 @@ export default function ChildEducation() {
       </section>
 
       <section aria-label="Education Fund Results">
-        <div className="section-card mb-4">
-          <p className="label-overline text-on-surface-var mb-1">Required Monthly SIP</p>
-          <p className="result-amount animate-result">
-            {formatINR(results.flatSIP)}<span className="text-xl text-on-surface-var">/mo</span>
-          </p>
-          <p className="text-xs text-on-surface-var mt-1 opacity-60">
-            For {courseInfo.label} starting in {yearsToGoal} years
-          </p>
-
-          <div className="grid grid-cols-2 gap-3 mt-5">
-            <div className="inner-card">
-              <p className="label-overline text-on-surface-var mb-1">With {stepUp}% Step-Up</p>
-              <p className="result-amount-sm mango-text">{formatINR(results.stepSIP)}<span className="text-sm text-on-surface-var">/mo</span></p>
-            </div>
-            <div className="inner-card">
-              <p className="label-overline lavender-text mb-1">Future Fee ({results.annualInfRate}% inf)</p>
-              <p className="result-amount-sm lavender-text">{formatINRLakh(results.inflatedFee)}</p>
-            </div>
-          </div>
+        <div className="mt-2 md:mt-0">
+          <CostOfWaiting delta={results.cow} label={t('childEdu.delay_cost')} />
         </div>
-
-        <CostOfWaiting delta={results.cow} label="Every month you delay costs your child" />
 
         <div className="inner-card mt-4">
           <p className="text-xs sage-text leading-relaxed">
-            📌 Education inflation in India is 10–11% (EY-CII Report 2023). This calculator uses course-specific rates,
-            not the generic 6%. MBBS private college uses 12% — healthcare inflation (IRDAI 2024).
+            {t('childEdu.note')}
           </p>
         </div>
 
         <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          Full {courseInfo.years}-year program fee used. Covers all years, not just Year 1. For educational purposes only.
+          {t('childEdu.disclaimer', { years: courseInfo.years })}
         </p>
       </section>
     </div>

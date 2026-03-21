@@ -522,4 +522,31 @@
       align-items: start;
     }
   }
+
+  /* ============================================================
+     DEVANAGARI (HINDI & MARATHI) FONT FIXES
+     ============================================================ */
+  html[lang='hi'] *,
+  html[lang='mr'] * {
+    letter-spacing: normal !important;
+  }
+
+  html[lang='hi'] h1, html[lang='mr'] h1,
+  html[lang='hi'] h2, html[lang='mr'] h2,
+  html[lang='hi'] h3, html[lang='mr'] h3,
+  html[lang='hi'] .font-serif, html[lang='mr'] .font-serif,
+  html[lang='hi'] .result-amount, html[lang='mr'] .result-amount,
+  html[lang='hi'] .result-amount-sm, html[lang='mr'] .result-amount-sm {
+    font-family: 'Tiro Devanagari Hindi', 'Newsreader', Georgia, serif !important;
+    font-style: normal !important;
+  }
+
+  html[lang='hi'] body, html[lang='mr'] body,
+  html[lang='hi'] .font-sans, html[lang='mr'] .font-sans,
+  html[lang='hi'] .btn-primary, html[lang='mr'] .btn-primary,
+  html[lang='hi'] .btn-secondary, html[lang='mr'] .btn-secondary,
+  html[lang='hi'] .label-overline, html[lang='mr'] .label-overline,
+  html[lang='hi'] .select-ghost, html[lang='mr'] .select-ghost {
+    font-family: 'Noto Sans Devanagari', 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  }
 }

@@ -1,32 +1,38 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const NAV_ITEMS = [
-  { path: '/', icon: '📊', label: 'SIP' },
-  { path: '/reverse', icon: '🎯', label: 'Reverse' },
-  { path: '/goals', icon: '🏁', label: 'Goals' },
-  { path: '/on-track', icon: '✅', label: 'Track' },
+  { path: '/', icon: '📊', labelKey: 'menu.mobile.sip' },
+  { path: '/reverse', icon: '🎯', labelKey: 'menu.mobile.reverse' },
+  { path: '/goals', icon: '🏁', labelKey: 'menu.mobile.goals' },
+  { path: '/on-track', icon: '✅', labelKey: 'menu.mobile.track' },
 ];
 
 const MENU_ITEMS = [
-  { path: '/',          label: 'Forward SIP Calculator' },
-  { path: '/reverse',  label: 'Reverse SIP Calculator' },
-  { path: '/goals',    label: 'Goal Planner' },
-  { path: '/retirement', label: 'Retirement Planner' },
-  { path: '/education', label: "Child's Education Fund" },
-  { path: '/emergency', label: 'Emergency Fund' },
-  { path: '/networth',  label: 'Net Worth Snapshot' },
-  { path: '/health',    label: 'Financial Health Score' },
-  { path: '/salary',    label: 'Salary-Lifestyle Alignment' },
-  { path: '/rent-vs-buy', label: 'Rent vs Buy' },
-  { path: '/tax-regime', label: 'Old vs New Tax Regime' },
-  { path: '/insurance', label: 'Term Insurance Calculator' },
-  { path: '/on-track',  label: 'Am I On Track?' },
+  { path: '/',          labelKey: 'menu.items.forward' },
+  { path: '/reverse',  labelKey: 'menu.items.reverse' },
+  { path: '/goals',    labelKey: 'menu.items.goals' },
+  { path: '/retirement', labelKey: 'menu.items.retirement' },
+  { path: '/education', labelKey: 'menu.items.education' },
+  { path: '/emergency', labelKey: 'menu.items.emergency' },
+  { path: '/networth',  labelKey: 'menu.items.networth' },
+  { path: '/health',    labelKey: 'menu.items.health' },
+  { path: '/salary',    labelKey: 'menu.items.salary' },
+  { path: '/rent-vs-buy', labelKey: 'menu.items.rent_vs_buy' },
+  { path: '/tax-regime', labelKey: 'menu.items.tax_regime' },
+  { path: '/insurance', labelKey: 'menu.items.insurance' },
+  { path: '/on-track',  labelKey: 'menu.items.on_track' },
 ];
 
 export default function Layout({ children }) {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const { t, i18n } = useTranslation();
+
+  React.useEffect(() => {
+    document.documentElement.lang = i18n.language.split('-')[0];
+  }, [i18n.language]);
 
   return (
     <div className="min-h-screen" style={{ background: '#131313' }}>
@@ -75,7 +81,20 @@ export default function Layout({ children }) {
             style={{ background: '#1c1b1b' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="label-overline text-on-surface-var mb-6">Calculators</p>
+            <div className="mb-6 pb-6" style={{ borderBottom: '1px solid rgba(86,67,52,0.15)' }}>
+              <p className="label-overline text-on-surface-var mb-3">Language / भाषा</p>
+              <select
+                className="select-ghost"
+                value={i18n.language.split('-')[0]}
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+              >
+                <option value="en">English</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="mr">मराठी (Marathi)</option>
+              </select>
+            </div>
+
+            <p className="label-overline text-on-surface-var mb-6">{t('menu.calculators')}</p>
             {MENU_ITEMS.map((item) => (
               <Link
                 key={item.path}
@@ -87,21 +106,18 @@ export default function Layout({ children }) {
                     : 'text-on-surface-var hover:text-on-surface'
                 }`}
               >
-                {item.label}
+                {t(item.labelKey)}
               </Link>
             ))}
 
             <div className="mt-8 pt-6" style={{ borderTop: '1px solid rgba(86,67,52,0.15)' }}>
               <p className="text-xs text-on-surface-var opacity-50 leading-relaxed">
-                HonestSIP calculators are for educational purposes only. Not financial advice.
-                Tax calculations based on Budget 2024 rates.
+                {t('menu.disclaimer')}
               </p>
             </div>
           </nav>
         </div>
       )}
-
-
 
       {/* Main content */}
       <main className="pt-14">
@@ -122,7 +138,7 @@ export default function Layout({ children }) {
                 }`}
               >
                 <span className="text-lg">{item.icon}</span>
-                <span className="text-xs font-sans font-medium">{item.label}</span>
+                <span className="text-xs font-sans font-medium">{t(item.labelKey)}</span>
               </Link>
             );
           })}
@@ -131,9 +147,7 @@ export default function Layout({ children }) {
 
       {/* Desktop disclaimer */}
       <footer className="hidden md:block text-center py-8 px-6 text-xs text-on-surface-var opacity-30 max-w-4xl mx-auto">
-        HonestSIP calculators are for educational and planning purposes only. They do not constitute financial advice.
-        Mutual fund investments are subject to market risks. Tax calculations effective July 23, 2024 (Budget 2024).
-        Peer benchmarking based on RBI, AMFI, WID India, PLFS data.
+        {t('menu.footer')}
       </footer>
     </div>
   );
