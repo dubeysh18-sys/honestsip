@@ -66,7 +66,8 @@
   }
 
   /* EDITORIAL LIGHT MODE OVERRIDES */
-  html[data-theme='light'] h1, html[data-theme='light'] h2 {
+  html[data-theme='light'] h1.text-on-surface, 
+  html[data-theme='light'] h2.text-on-surface {
     color: rgb(var(--color-primary)) !important;
   }
 
@@ -75,6 +76,10 @@
   html[data-theme='light'] .text-on-surface-var { color: rgb(var(--color-on-surface-var)) !important; }
   html[data-theme='light'] .bg-on-surface { background-color: rgb(var(--color-on-surface)) !important; }
   html[data-theme='light'] .bg-on-surface-var { background-color: rgb(var(--color-on-surface-var)) !important; }
+  html[data-theme='light'] .bg-surface { background-color: rgb(var(--color-surface)) !important; }
+  html[data-theme='light'] .bg-surface-lowest { background-color: rgb(var(--color-surface-lowest)) !important; }
+  html[data-theme='light'] .bg-surface-low { background-color: rgb(var(--color-surface-low)) !important; }
+  html[data-theme='light'] .bg-surface-high { background-color: rgb(var(--color-surface-high)) !important; }
   html[data-theme='light'] .border-outline-var { border-color: rgb(var(--color-outline-var)) !important; }
   html[data-theme='light'] .bg-surface-highest { background-color: rgb(var(--color-surface-highest)) !important; }
   html[data-theme='light'] .border-primary { border-color: rgb(var(--color-primary)) !important; }

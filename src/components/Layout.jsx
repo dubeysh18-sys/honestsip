@@ -51,11 +51,12 @@ export default function Layout({ children }) {
         style={{ backgroundColor: 'rgba(var(--color-surface), 0.95)' }}
       >
         <Link to="/" className="flex items-center" aria-label="Home">
-          <div className="flex items-center gap-1.5 font-serif text-2xl font-bold tracking-tight text-on-surface">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6 text-primary">
-              <circle cx="12" cy="12" r="10" strokeOpacity="0.3" />
-              <path d="M12 2v20M2 12h20M12 12l8-8" strokeLinecap="round" />
-            </svg>
+          <div className="flex items-center gap-2 font-serif text-2xl font-bold tracking-tight text-on-surface">
+            <img 
+              src="/src/assets/compass.png" 
+              alt="Compass Logo" 
+              className="w-24 h-24 object-contain -ml-8 -mr-6 scale-[1.4]" 
+            />
             <span>Honest<span className="text-secondary opacity-80" style={{ color: 'rgb(var(--color-primary))', opacity: 1 }}>SIP</span></span>
           </div>
         </Link>
