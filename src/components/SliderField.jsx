@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { formatINR } from '../lib/ruleEngine';
 
 export default function SliderField({
@@ -11,6 +11,35 @@ export default function SliderField({
   onChange,
   formatValue,
 }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [localValue, setLocalValue] = useState(value.toString());
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (!isEditing) {
+      setLocalValue(value.toString());
+    }
+  }, [value, isEditing]);
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    let num = Number(localValue);
+    if (!isNaN(num)) {
+      if (num < min) num = min;
+      if (num > max) num = max;
+      onChange(num);
+      setLocalValue(num.toString());
+    } else {
+      setLocalValue(value.toString());
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      inputRef.current?.blur();
+    }
+  };
+
   const display = formatValue ? formatValue(value) : `${value}${unit}`;
   const pct = ((value - min) / (max - min)) * 100;
 
@@ -18,9 +47,26 @@ export default function SliderField({
     <div className="slider-field mb-5">
       <div className="flex justify-between items-baseline mb-2">
         <span className="label-overline">{label}</span>
-        <span className="font-serif text-xl text-on-surface leading-none mango-text font-light">
-          {display}
-        </span>
+        {isEditing ? (
+          <input
+            ref={inputRef}
+            type="number"
+            value={localValue}
+            onChange={(e) => setLocalValue(e.target.value)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            className="w-32 bg-transparent border-b border-mango-text/50 text-right font-serif text-xl text-mango-text outline-none focus:border-mango-accent focus:outline-none focus:ring-0"
+            autoFocus
+          />
+        ) : (
+          <span 
+            className="font-serif text-xl text-on-surface leading-none mango-text font-light cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => setIsEditing(true)}
+            title="Click to manually edit value"
+          >
+            {display}
+          </span>
+        )}
       </div>
       <div className="relative">
         <input

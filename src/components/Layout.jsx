@@ -36,7 +36,7 @@ export default function Layout({ children }) {
         style={{ background: 'rgba(19,19,19,0.95)', backdropFilter: 'blur(12px)' }}
       >
         <Link to="/" className="flex items-center">
-          <div style={{ height: '44px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+          <div style={{ height: '64px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
             <img
               src="/src/assets/logo.png"
               alt="HonestSIP Logo"
