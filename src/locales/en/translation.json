@@ -5,6 +5,7 @@
     "footer": "HonestSIP calculators are for educational and planning purposes only. They do not constitute financial advice. Mutual fund investments are subject to market risks. Tax calculations effective July 23, 2024 (Budget 2024). Peer benchmarking based on RBI, AMFI, WID India, PLFS data.",
     "items": {
       "forward": "Forward SIP Calculator",
+      "learn": "Honest Masterclass",
       "reverse": "Reverse SIP Calculator",
       "goals": "Goal Planner",
       "retirement": "Retirement Planner",
@@ -19,7 +20,8 @@
       "on_track": "Am I On Track?"
     },
     "mobile": {
-      "sip": "SIP",
+      "sip": "SIP Plan",
+      "learn": "Learn",
       "reverse": "Reverse",
       "goals": "Goals",
       "track": "Track"

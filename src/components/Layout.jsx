@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 const NAV_ITEMS = [
   { path: '/', icon: '📊', labelKey: 'menu.mobile.sip' },
-  { path: '/reverse', icon: '🎯', labelKey: 'menu.mobile.reverse' },
   { path: '/goals', icon: '🏁', labelKey: 'menu.mobile.goals' },
   { path: '/on-track', icon: '✅', labelKey: 'menu.mobile.track' },
+  { path: '/learn', icon: '📚', labelKey: 'menu.mobile.learn' },
 ];
 
 const MENU_ITEMS = [
@@ -23,6 +23,7 @@ const MENU_ITEMS = [
   { path: '/tax-regime', labelKey: 'menu.items.tax_regime' },
   { path: '/insurance', labelKey: 'menu.items.insurance' },
   { path: '/on-track',  labelKey: 'menu.items.on_track' },
+  { path: '/learn',     labelKey: 'menu.items.learn' },
 ];
 
 export default function Layout({ children }) {
