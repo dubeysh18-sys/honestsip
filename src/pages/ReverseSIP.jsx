@@ -215,7 +215,7 @@ export default function ReverseSIP() {
       <section aria-label="Reverse SIP Results">
         <div className="cta-card mb-4">
           <p className="label-overline mb-1 opacity-90 text-white">Required Monthly Commitment</p>
-          <p className="result-amount animate-result">{formatINR(results.flatSIP)}<span className="text-xl text-on-surface-var">/mo</span></p>
+          <p className="result-amount animate-result">{formatINR(results.flatSIP, true)}<span className="text-xl text-on-surface-var">/mo</span></p>
           <p className="text-xs text-on-surface-var mt-1 opacity-60">
             To reach {formatINRLakh(inflateGoal ? results.goalAdjusted : goal)} corpus in {years} years with {rate}% return
           </p>
@@ -223,7 +223,7 @@ export default function ReverseSIP() {
           <div className="grid grid-cols-2 gap-3 mt-5">
             <div className="inner-card">
               <p className="label-overline text-on-surface-var mb-1">With {stepUp}% Step-Up</p>
-              <p className="result-amount-sm mango-text">{formatINR(results.stepUpSIP)}<span className="text-sm text-on-surface-var">/mo</span></p>
+              <p className="result-amount-sm mango-text">{formatINR(results.stepUpSIP, true)}<span className="text-sm text-on-surface-var">/mo</span></p>
               <p className="text-xs sage-text mt-1">Start lower, grow with income</p>
             </div>
             <div className="inner-card">
@@ -255,7 +255,7 @@ export default function ReverseSIP() {
               <p className="label-overline mb-1 text-primary-container">Cost of Waiting</p>
               <p className="text-sm text-on-surface leading-relaxed">
                 Delaying your start by just <strong>1 month</strong> increases your monthly requirement by{' '}
-                <span className="font-serif text-lg mango-text">+{formatINR(results.sipIncrease)}</span> to reach the same goal.
+                <span className="font-serif text-lg mango-text">+{formatINR(results.sipIncrease, true)}</span> to reach the same goal.
               </p>
             </div>
           </div>

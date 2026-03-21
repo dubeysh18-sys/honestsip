@@ -168,7 +168,7 @@ export default function RetirementPlanner() {
             <div className="section-card mb-4">
               <p className="label-overline text-on-surface-var mb-1">Required Monthly SIP</p>
               <p className="result-amount animate-result">
-                {formatINR(results.requiredSIP)}
+                {formatINR(results.requiredSIP, true)}
                 <span className="text-xl text-on-surface-var">/mo</span>
               </p>
               <p className="text-xs text-on-surface-var mt-1 opacity-60">

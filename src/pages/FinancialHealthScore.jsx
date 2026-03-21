@@ -142,7 +142,7 @@ export default function FinancialHealthScore() {
           <p className="label-overline text-on-surface-var mb-3">Your Score</p>
           <div className="relative inline-flex items-center justify-center">
             <svg width="140" height="140" viewBox="0 0 140 140">
-              <circle cx="70" cy="70" r="60" fill="none" stroke="#2a2a2a" strokeWidth="10" />
+              <circle cx="70" cy="70" r="60" fill="none" stroke="rgb(var(--color-surface-high))" strokeWidth="10" />
               <circle
                 cx="70" cy="70" r="60" fill="none"
                 stroke="#ffb77d" strokeWidth="10"

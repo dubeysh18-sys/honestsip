@@ -120,7 +120,7 @@ export default function CorpusWaterfall({
                           <span>{r.label}</span>
                         )}
                         {r.tooltip && (
-                          <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-[#2a2a2a] text-xs text-on-surface rounded-lg shadow-2xl z-10 whitespace-normal border border-[rgba(255,255,255,0.1)] leading-relaxed">
+                          <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-surface-high text-xs text-on-surface rounded-lg shadow-2xl z-10 whitespace-normal border border-outline-var/20 leading-relaxed">
                             {r.tooltip}
                           </div>
                         )}

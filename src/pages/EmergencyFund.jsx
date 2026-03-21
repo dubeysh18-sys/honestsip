@@ -53,11 +53,11 @@ export default function EmergencyFund() {
                 <button
                   key={key}
                   onClick={() => setEmpType(key)}
-                  className="w-full text-left p-3 rounded-xl transition-all flex justify-between items-center"
-                  style={{
-                    background: employmentType === key ? 'rgba(255,183,125,0.12)' : '#2a2a2a',
-                    border: employmentType === key ? '1px solid rgba(255,183,125,0.3)' : '1px solid transparent',
-                  }}
+                  className={`w-full text-left p-3 rounded-xl transition-all flex justify-between items-center border ${
+                    employmentType === key 
+                      ? 'bg-primary/10 border-primary/30' 
+                      : 'bg-surface-high border-transparent'
+                  }`}
                 >
                   <div>
                     <p className="text-sm text-on-surface font-medium">{b.label}</p>

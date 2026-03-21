@@ -38,7 +38,7 @@ export default function GrowthChart({ data }) {
                 <stop offset="95%" stopColor="#cebefa" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="#2a2a2a" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke="rgb(var(--color-surface-high))" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="year"
               tick={{ fill: '#ddc1ae', fontSize: 10 }}

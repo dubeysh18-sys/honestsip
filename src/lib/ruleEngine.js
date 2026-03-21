@@ -400,11 +400,18 @@ export function yearByYearGrowth(P, annualRate, years, g = 0, lumpSum = 0) {
 // ---------------------------------------------------------------------------
 // Utility: Format currency in Indian number system
 // ---------------------------------------------------------------------------
-export function formatINR(amount, decimals = 0) {
+export function formatINR(amount, compact = false) {
   if (amount === null || amount === undefined || isNaN(amount)) return '₹0';
-  const abs = Math.abs(Math.round(amount));
+  const abs = Math.abs(amount);
   const sign = amount < 0 ? '-' : '';
-  const str = abs.toString();
+
+  if (compact && abs >= 100000) {
+    if (abs >= 10000000) return sign + '₹' + (abs / 10000000).toFixed(2) + ' Cr';
+    if (abs >= 100000)   return sign + '₹' + (abs / 100000).toFixed(2) + ' L';
+  }
+
+  const rounded = Math.round(abs);
+  const str = rounded.toString();
   // Indian grouping: last 3 then groups of 2
   if (str.length <= 3) return sign + '₹' + str;
   const last3 = str.slice(-3);
@@ -418,7 +425,9 @@ export function formatINRLakh(amount) {
   if (abs >= 10000000) return (amount / 10000000).toFixed(2) + ' Cr';
   if (abs >= 100000)   return (amount / 100000).toFixed(2) + ' L';
   if (abs >= 1000)     return (amount / 1000).toFixed(1) + ' K';
-  return formatINR(amount);
+  // If not compact-able in L/Cr/K, use standard INR without currency symbol for consistency in sub-cards
+  const standard = formatINR(amount);
+  return standard.replace('₹', ''); 
 }
 
 // ---------------------------------------------------------------------------

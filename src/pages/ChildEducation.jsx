@@ -55,7 +55,7 @@ export default function ChildEducation() {
         <div className="section-card">
           <p className="label-overline text-on-surface-var mb-1">{t('childEdu.req_sip')}</p>
           <p className="result-amount animate-result">
-            {formatINR(results.flatSIP)}<span className="text-xl text-on-surface-var">/mo</span>
+            {formatINR(results.flatSIP, true)}<span className="text-xl text-on-surface-var">/mo</span>
           </p>
           <p className="text-xs text-on-surface-var mt-1 opacity-60">
             {t('childEdu.req_desc', { course: courseInfo.label, years: yearsToGoal })}
@@ -64,7 +64,7 @@ export default function ChildEducation() {
           <div className="grid grid-cols-2 gap-3 mt-5">
             <div className="inner-card">
               <p className="label-overline text-on-surface-var mb-1">{t('childEdu.with_stepup', { stepup: stepUp })}</p>
-              <p className="result-amount-sm mango-text">{formatINR(results.stepSIP)}<span className="text-sm text-on-surface-var">/mo</span></p>
+              <p className="result-amount-sm mango-text">{formatINR(results.stepSIP, true)}<span className="text-sm text-on-surface-var">/mo</span></p>
             </div>
             <div className="inner-card">
               <p className="label-overline lavender-text mb-1">{t('childEdu.future_fee', { rate: results.annualInfRate })}</p>

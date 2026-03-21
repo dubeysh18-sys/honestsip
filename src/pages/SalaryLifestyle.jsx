@@ -110,7 +110,7 @@ export default function SalaryLifestyle() {
                       <p className="text-sm font-bold" style={{ color: b.color }}>{b.actual}%</p>
                     </div>
                   </div>
-                  <div className="relative h-2 rounded-full" style={{ background: '#353534' }}>
+                  <div className="relative h-2 rounded-full bg-surface-highest">
                     <div className="absolute top-0 left-0 h-2 rounded-full transition-all duration-700"
                       style={{ width: `${Math.min(100, b.actual)}%`, background: b.color }} />
                     {/* Target marker */}

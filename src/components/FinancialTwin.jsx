@@ -60,10 +60,7 @@ export default function FinancialTwin({ sipAmount, context = 'SIP' }) {
             <button
               key={b.bracket}
               onClick={() => { setBracket(b.bracket); setStep(2); }}
-              className="w-full text-left px-4 py-3 rounded-xl text-sm text-on-surface transition-all"
-              style={{ background: '#2a2a2a' }}
-              onMouseEnter={(e) => e.currentTarget.style.background = '#353534'}
-              onMouseLeave={(e) => e.currentTarget.style.background = '#2a2a2a'}
+              className="w-full text-left px-4 py-3 rounded-xl text-sm text-on-surface transition-colors bg-surface-high hover:bg-surface-highest"
             >
               {b.label}
             </button>

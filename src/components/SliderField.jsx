@@ -77,7 +77,7 @@ export default function SliderField({
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
           style={{
-            background: `linear-gradient(to right, #ff8c00 0%, #ffb77d ${pct}%, #353534 ${pct}%, #353534 100%)`,
+            background: `linear-gradient(to right, rgb(var(--color-primary-container)) 0%, rgb(var(--color-primary)) ${pct}%, rgb(var(--color-surface-highest)) ${pct}%, rgb(var(--color-surface-highest)) 100%)`,
           }}
           className="w-full"
         />

@@ -140,7 +140,7 @@ export default function ForwardSIP() {
 
         <div className="cta-card">
           <p className="label-overline mb-2 opacity-90 text-white">{t('forwardSIP.res_maturity')}</p>
-          <p className="result-amount animate-result">{formatINR(results.fvGross)}</p>
+          <p className="result-amount animate-result">{formatINR(results.fvGross, true)}</p>
           <p className="text-xs text-on-surface-var mt-1 opacity-60">
             {t('forwardSIP.res_nominal', { years, rate })}
           </p>

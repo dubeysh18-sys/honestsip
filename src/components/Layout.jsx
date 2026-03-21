@@ -32,17 +32,23 @@ export default function Layout({ children }) {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = React.useState(false);
   const { t, i18n } = useTranslation();
+  const [theme, setTheme] = React.useState(
+    () => localStorage.getItem('theme') || 'dark'
+  );
 
   React.useEffect(() => {
     document.documentElement.lang = i18n.language.split('-')[0];
   }, [i18n.language]);
 
   React.useEffect(() => {
-    // Hydrate the theme globally on initial load to prevent 'flash of dark mode' 
-    // since ThemeToggle is unmounted until menu opens.
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  }, []);
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    setMenuOpen(false);
+  };
 
   return (
     <div className="min-h-screen text-on-surface transition-colors duration-300" style={{ backgroundColor: 'rgb(var(--color-surface))' }}>
@@ -117,7 +123,7 @@ export default function Layout({ children }) {
 
             <div className="mt-6 pt-6 flex items-center justify-between border-t border-outline-var/15">
               <span className="text-on-surface-var font-sans text-sm">Appearance</span>
-              <ThemeToggle />
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
             </div>
 
             <div className="mt-8 pt-6 border-t border-outline-var/15">

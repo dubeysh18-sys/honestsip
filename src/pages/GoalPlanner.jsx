@@ -132,7 +132,7 @@ export default function GoalPlanner() {
       <section aria-label="Goal Planner Results">
         <div className="section-card mb-4">
           <p className="label-overline text-on-surface-var mb-1">Required Monthly SIP</p>
-          <p className="result-amount animate-result">{formatINR(results.flatSIP)}<span className="text-xl text-on-surface-var">/mo</span></p>
+          <p className="result-amount animate-result">{formatINR(results.flatSIP, true)}<span className="text-xl text-on-surface-var">/mo</span></p>
           <p className="text-xs text-on-surface-var mt-1 opacity-60">
             Goal inflated to {formatINRLakh(results.futureGoal)} at {(inf * 100).toFixed(0)}% p.a. in {years} yrs
           </p>
@@ -140,7 +140,7 @@ export default function GoalPlanner() {
           <div className="grid grid-cols-2 gap-3 mt-5">
             <div className="inner-card">
               <p className="label-overline text-on-surface-var mb-1">With {stepUp}% Step-Up</p>
-              <p className="result-amount-sm mango-text">{formatINR(results.stepUpSIP)}<span className="text-sm text-on-surface-var">/mo</span></p>
+              <p className="result-amount-sm mango-text">{formatINR(results.stepUpSIP, true)}<span className="text-sm text-on-surface-var">/mo</span></p>
             </div>
             <div className="inner-card">
               <p className="label-overline lavender-text mb-1">Future Goal Value</p>
@@ -154,7 +154,7 @@ export default function GoalPlanner() {
             <p className="label-overline mb-1 text-primary-container">⚡ Cost of Waiting</p>
             <p className="text-sm text-on-surface leading-relaxed">
               Starting 1 month later means your SIP must increase by{' '}
-              <span className="font-serif text-xl mango-text">{formatINR(results.sipIncrease)}</span>/month.
+              <span className="font-serif text-xl mango-text">{formatINR(results.sipIncrease, true)}</span>/month.
             </p>
           </div>
         )}

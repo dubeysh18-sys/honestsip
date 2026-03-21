@@ -58,12 +58,8 @@ export default function Select({ label, value, onChange, options = [] }) {
       {/* Dropdown panel */}
       {open && (
         <div
-          className="absolute left-0 right-0 mt-3 rounded-xl z-50 overflow-hidden shadow-2xl animate-fade-in"
-          style={{
-            top: '100%',
-            background: '#2a2a2a',
-            border: '1px solid rgba(255,255,255,0.1)',
-          }}
+          className="absolute left-0 right-0 mt-3 rounded-xl z-50 overflow-hidden shadow-2xl animate-fade-in bg-surface-high border border-outline-var/20"
+          style={{ top: '100%' }}
         >
           {options.map((opt) => {
             const isSelected = opt.value === value;
@@ -72,52 +68,23 @@ export default function Select({ label, value, onChange, options = [] }) {
                 key={opt.value}
                 type="button"
                 onClick={() => { onChange(opt.value); setOpen(false); }}
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '1rem 1.25rem',
-                  background: isSelected ? 'rgba(255,183,125,0.08)' : 'transparent',
-                  borderLeft: isSelected ? '2px solid #ffb77d' : '2px solid transparent',
-                  borderTop: 'none',
-                  borderRight: 'none',
-                  borderBottom: '1px solid rgba(255,255,255,0.02)',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'background 0.15s',
-                }}
-                onMouseEnter={(e) => {
-                  if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                }}
-                onMouseLeave={(e) => {
-                  if (!isSelected) e.currentTarget.style.background = 'transparent';
-                }}
+                className={`w-full flex items-center justify-between px-5 py-4 text-left cursor-pointer transition-colors border-b border-outline-var/10 ${
+                  isSelected 
+                    ? 'bg-primary/10 border-l-2 border-primary' 
+                    : 'bg-transparent border-l-2 border-transparent hover:bg-surface-highest'
+                }`}
               >
                 <span>
-                  <span
-                    className={`font-serif text-lg ${isSelected ? 'text-on-surface' : 'text-on-surface-var'}`}
-                    style={{ fontFamily: 'Newsreader, Georgia, serif', display: 'block', lineHeight: 1.2 }}
-                  >
+                  <span className={`font-serif text-lg block leading-snug ${isSelected ? 'text-on-surface' : 'text-on-surface-var'}`}>
                     {opt.label}
                   </span>
                   {opt.sublabel && (
-                    <span
-                      className="label-overline text-on-surface-var"
-                      style={{ opacity: 0.5, display: 'block', marginTop: '0.25rem' }}
-                    >
+                    <span className="label-overline text-on-surface-var opacity-50 block mt-1">
                       {opt.sublabel}
                     </span>
                   )}
                 </span>
-                <span
-                  style={{
-                    fontSize: '1rem',
-                    color: isSelected ? '#ffb77d' : 'rgba(221,193,174,0.3)',
-                    marginLeft: '0.75rem',
-                    flexShrink: 0,
-                  }}
-                >
+                <span className={`text-base ml-3 shrink-0 ${isSelected ? 'text-primary' : 'text-on-surface-var opacity-30'}`}>
                   {isSelected ? '✓' : '→'}
                 </span>
               </button>
