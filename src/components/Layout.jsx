@@ -130,7 +130,7 @@ export default function Layout({ children }) {
       )}
 
       {/* Main content */}
-      <main className="pt-14">
+      <main className="pt-32">
         {children}
       </main>
 
