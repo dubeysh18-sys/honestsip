@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import NumberInput from '../components/NumberInput';
 import SliderField from '../components/SliderField';
+import Select from '../components/Select';
 import { netWorthBenchmark, formatINR, formatINRLakh } from '../lib/ruleEngine';
 import { INCOME_PERCENTILES, EMERGENCY_FUND_BENCHMARKS } from '../lib/benchmarkData';
 
@@ -132,14 +133,12 @@ export default function OnTrack() {
 
           <NumberInput label="Monthly SIP Amount" value={monthlySIP} onChange={setSip} />
 
-          <div className="mb-4">
-            <p className="label-overline mb-2">Employment Type</p>
-            <select className="select-ghost" value={empType} onChange={e => setEmpType(e.target.value)}>
-              {Object.entries(EMERGENCY_FUND_BENCHMARKS).map(([k, b]) => (
-                <option key={k} value={k}>{b.label}</option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Employment Type"
+            value={empType}
+            onChange={setEmpType}
+            options={Object.entries(EMERGENCY_FUND_BENCHMARKS).map(([k, b]) => ({ value: k, label: b.label }))}
+          />
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import SliderField from '../components/SliderField';
 import NumberInput from '../components/NumberInput';
+import Select from '../components/Select';
 import CostOfWaiting from '../components/CostOfWaiting';
 import GrowthChart from '../components/GrowthChart';
 import RealWorldTranslation from '../components/RealWorldTranslation';
@@ -174,7 +175,7 @@ export default function ForwardSIP() {
 
         {/* Advanced config */}
         <div className="section-card mb-4">
-          <p className="label-overline text-on-surface-var mb-4">Archivist Configuration</p>
+          <p className="label-overline text-on-surface-var mb-4">HonestSIP Configuration</p>
 
           <NumberInput
             label="Starting Lump Sum (Optional)"
@@ -213,32 +214,20 @@ export default function ForwardSIP() {
             />
           )}
 
-          <div className="mb-4">
-            <p className="label-overline mb-2">Taxation Type</p>
-            <select
-              className="select-ghost"
-              value={taxType}
-              onChange={(e) => setTaxType(e.target.value)}
-            >
-              {TAX_TYPES.map(t => (
-                <option key={t.value} value={t.value}>{t.label}</option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Taxation Type"
+            value={taxType}
+            onChange={setTaxType}
+            options={TAX_TYPES.map(t => ({ value: t.value, label: t.label }))}
+          />
 
           {(taxType === 'debt' || taxType === 'gold') && (
-            <div className="mb-4">
-              <p className="label-overline mb-2">Your Tax Slab</p>
-              <select
-                className="select-ghost"
-                value={slabRate}
-                onChange={(e) => setSlabRate(Number(e.target.value))}
-              >
-                {SLAB_RATES.map(s => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
-                ))}
-              </select>
-            </div>
+            <Select
+              label="Your Tax Slab"
+              value={slabRate}
+              onChange={(v) => setSlabRate(Number(v))}
+              options={SLAB_RATES.map(s => ({ value: s.value, label: s.label }))}
+            />
           )}
         </div>
       </section>

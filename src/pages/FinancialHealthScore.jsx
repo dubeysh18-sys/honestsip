@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import NumberInput from '../components/NumberInput';
 import SliderField from '../components/SliderField';
+import Select from '../components/Select';
 import { computeFinancialHealthScore, FH_WEIGHTS, formatINR } from '../lib/benchmarkData';
 import { emergencyFundTarget, netWorthBenchmark } from '../lib/ruleEngine';
 import { EMERGENCY_FUND_BENCHMARKS } from '../lib/benchmarkData';
@@ -95,14 +96,12 @@ export default function FinancialHealthScore() {
             onChange={setEFMonths}
           />
 
-          <div className="mb-4">
-            <p className="label-overline mb-2">Employment Type</p>
-            <select className="select-ghost" value={empType} onChange={e => setEmpType(e.target.value)}>
-              {Object.entries(EMERGENCY_FUND_BENCHMARKS).map(([k, b]) => (
-                <option key={k} value={k}>{b.label}</option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Employment Type"
+            value={empType}
+            onChange={setEmpType}
+            options={Object.entries(EMERGENCY_FUND_BENCHMARKS).map(([k, b]) => ({ value: k, label: b.label }))}
+          />
 
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>

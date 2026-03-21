@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import SliderField from '../components/SliderField';
 import NumberInput from '../components/NumberInput';
+import Select from '../components/Select';
 import CostOfWaiting from '../components/CostOfWaiting';
 import FinancialTwin from '../components/FinancialTwin';
 import {
@@ -170,21 +171,21 @@ export default function ReverseSIP() {
         </div>
 
         <div className="section-card mb-4">
-          <p className="label-overline text-on-surface-var mb-4">Archivist Configuration</p>
+          <p className="label-overline text-on-surface-var mb-4">HonestSIP Configuration</p>
 
-          <div className="mb-4">
-            <p className="label-overline mb-2">Taxation Regime</p>
-            <select className="select-ghost" value={taxType} onChange={e => setTaxType(e.target.value)}>
-              {TAX_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
-            </select>
-          </div>
+          <Select
+            label="Taxation Regime"
+            value={taxType}
+            onChange={setTaxType}
+            options={TAX_TYPES.map(t => ({ value: t.value, label: t.label }))}
+          />
 
-          <div className="mb-4">
-            <p className="label-overline mb-2">Asset Class</p>
-            <select className="select-ghost" value="equity" onChange={() => {}}>
-              <option>Equity Mutual Funds</option>
-            </select>
-          </div>
+          <Select
+            label="Asset Class"
+            value="equity"
+            onChange={() => {}}
+            options={[{ value: 'equity', label: 'Equity Mutual Funds' }]}
+          />
 
           <SliderField
             label="Exit Load"

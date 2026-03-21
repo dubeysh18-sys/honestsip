@@ -35,9 +35,22 @@ export default function Layout({ children }) {
         className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 py-4"
         style={{ background: 'rgba(19,19,19,0.95)', backdropFilter: 'blur(12px)' }}
       >
-        <Link to="/" className="flex items-center gap-2">
-          <span className="text-xs label-overline text-on-surface-var tracking-widest">THE</span>
-          <span className="font-serif text-lg text-on-surface">Archivist</span>
+        <Link to="/" className="flex items-center">
+          <div style={{ height: '44px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+            <img
+              src="/src/assets/logo.png"
+              alt="HonestSIP Logo"
+              style={{
+                height: '160%',
+                width: 'auto',
+                mixBlendMode: 'screen',
+                filter: 'brightness(0.85) contrast(1.6) saturate(1.2)',
+                objectFit: 'contain',
+                objectPosition: 'left center',
+                transform: 'translateY(1%)'
+              }}
+            />
+          </div>
         </Link>
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -88,29 +101,10 @@ export default function Layout({ children }) {
         </div>
       )}
 
-      {/* Ticker tape */}
-      <div
-        className="fixed top-14 left-0 right-0 z-30 overflow-hidden py-1.5"
-        style={{ background: '#0e0e0e', borderBottom: '1px solid rgba(86,67,52,0.10)' }}
-      >
-        <div className="ticker-content flex gap-12 whitespace-nowrap" style={{ display: 'flex' }}>
-          {[1, 2].map((i) => (
-            <React.Fragment key={i}>
-              <span className="label-md uppercase tracking-widest text-on-surface-var opacity-50 text-xs">
-                SENSEX 20Y CAGR ≈ 14%&nbsp;&nbsp;•&nbsp;&nbsp;
-                EQUITY LTCG: 12.5% (Budget 2024)&nbsp;&nbsp;•&nbsp;&nbsp;
-                AMFI SIP AVG: ₹2,350/mo&nbsp;&nbsp;•&nbsp;&nbsp;
-                EPFO RATE: 8.25% FY24&nbsp;&nbsp;•&nbsp;&nbsp;
-                RBI TARGET INFLATION: 4%&nbsp;&nbsp;•&nbsp;&nbsp;
-                EDUCATION INFLATION: 10–11% EY-CII 2023&nbsp;&nbsp;•&nbsp;&nbsp;
-              </span>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
+
 
       {/* Main content */}
-      <main className="pt-24">
+      <main className="pt-14">
         {children}
       </main>
 
