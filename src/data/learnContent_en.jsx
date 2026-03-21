@@ -11,10 +11,10 @@ export const enChapters = [
         <p className="mb-4">Every January, millions of people buy an expensive, annual gym membership. They are highly motivated for exactly fourteen days. By February, the gym is empty, but their bank account is still lighter. Now, imagine a different scenario: What if, instead of relying on your fragile willpower to go to the gym, a trainer came to your house, took exactly 15 minutes of your time, and guaranteed you would be fit in five years? You wouldn’t have to think; you just have to <em>not cancel</em>.</p>
         <p className="mb-8">This is exactly what a Systematic Investment Plan (SIP) does for your financial fitness. Human beings are terrible at manually saving large chunks of money—there is always a new phone to buy or a vacation to take. A SIP removes your brain from the equation entirely.</p>
         
-        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-[rgba(255,255,255,0.05)] pb-2">The Mechanics: How a SIP Actually Works</h3>
+        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-outline-var/10 pb-2">The Mechanics: How a SIP Actually Works</h3>
         <p className="mb-8">A SIP is not an investment product. You cannot "buy a SIP." A SIP is simply an instruction, a financial mandate, that you give to your bank. You are telling your bank: <em>"On the 5th of every month, before I can spend it on pizza or shoes, automatically extract ₹5,000 and deploy it into my chosen Mutual Fund."</em></p>
 
-        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-[rgba(255,255,255,0.05)] pb-2">The Twin Engines of a SIP</h3>
+        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-outline-var/10 pb-2">The Twin Engines of a SIP</h3>
         <p className="mb-4">To understand why this boring, automated process creates millionaires, you need to look under the hood at its two main engines:</p>
         
         <h4 className="font-semibold text-mango-text mb-2 mt-4">1. The Eighth Wonder: Compound Interest</h4>
@@ -26,7 +26,7 @@ export const enChapters = [
           <li><strong>Regular Plan (The Middleman Door):</strong> If you invest via a bank agent or a traditional broker, they put you in a "Regular" plan. You don't pay an upfront fee, but the mutual fund company silently deducts 1% to 1.5% of your total wealth every single year and pays it to the broker as a commission. Over 20 years, this "tiny" 1% fee will eat away nearly <strong>20% of your total final wealth</strong>.</li>
           <li><strong>Direct Plan (The Honest Door):</strong> You bypass the broker. No commissions are paid. That 1.5% stays in your account and compounds. Platforms like Honest SIP champion the Direct Plan because your money should work for <em>you</em>, not for a bank manager's yacht fund.</li>
         </ul>
-        <p className="italic opacity-70 border-l-2 border-[rgba(255,183,125,0.5)] pl-4 py-2 mt-6 bg-[rgba(255,255,255,0.02)] rounded-r-lg">Now that your money is on autopilot, you might be wondering, "Why can't I just keep my money safe in a bank account?" To answer that, we need to meet the silent thief hiding in your wallet...</p>
+        <p className="italic opacity-70 border-l-2 border-primary/50 pl-4 py-2 mt-6 bg-surface-highest/10 rounded-r-lg">Now that your money is on autopilot, you might be wondering, "Why can't I just keep my money safe in a bank account?" To answer that, we need to meet the silent thief hiding in your wallet...</p>
       </>
     ),
     quiz: {
@@ -44,11 +44,11 @@ export const enChapters = [
         <h3 className="font-serif text-2xl text-on-surface mb-3">The Parle-G Phenomenon</h3>
         <p className="mb-8">If you grew up in India, you know the iconic Parle-G biscuit packet. Twenty years ago, a ₹5 packet was thick, bulky, and could feed a group of kids. Today, you still hand the shopkeeper a ₹5 coin, and you still get a Parle-G packet. But hold it in your hand. It’s significantly smaller, lighter, and contains half the biscuits. The price didn’t change, but the <em>value</em> of your ₹5 coin was sliced in half. This is called "Shrinkflation," and it is the most visible proof of a terrifying invisible force: Inflation.</p>
         
-        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-[rgba(255,255,255,0.05)] pb-2">The Mathematics of Getting Poorer Safely</h3>
+        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-outline-var/10 pb-2">The Mathematics of Getting Poorer Safely</h3>
         <p className="mb-4">Inflation is the rate at which the general cost of living—rent, petrol, milk, school fees—rises over time. Historically, in developing economies like India, inflation hovers around 6% to 7% annually.</p>
         <p className="mb-4">Most beginners look at their bank accounts and think, <em>"I have ₹5 Lakhs sitting safely in my savings account earning 3% interest. I am not losing money."</em> This is the greatest optical illusion in personal finance. You must always calculate your <strong>Real Rate of Return</strong>.</p>
         
-        <div className="bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.1)] rounded-lg p-5 mb-6 text-center font-serif text-lg text-on-surface mt-5">
+        <div className="bg-surface-low border border-outline-var/20 rounded-lg p-5 mb-6 text-center font-serif text-lg text-on-surface mt-5">
           <p className="opacity-70 text-sm mb-2 font-sans">The Formula That Matters</p>
           Nominal Return (What the bank pays)<br/> - Inflation (The rising cost of life)<br/> <strong className="text-mango-text mt-2 block">= Real Return (Your actual wealth growth)</strong>
         </div>
@@ -58,9 +58,9 @@ export const enChapters = [
           <li><strong>Savings Account:</strong> You earn 3%. Inflation is 6%. Your Real Return is <strong>-3%</strong>.</li>
           <li><strong>Fixed Deposit (Post-Tax):</strong> You earn 5.5%. Inflation is 6%. Your Real Return is <strong>-0.5%</strong>.</li>
         </ul>
-        <p className="mb-8 font-semibold text-red-300 opacity-90">You are literally losing purchasing power safely. If you hide ₹1 Lakh under your mattress today, in 10 years, it will still physically be ₹1 Lakh, but it will only buy you ₹50,000 worth of goods.</p>
+        <p className="mb-8 font-semibold text-danger opacity-90">You are literally losing purchasing power safely. If you hide ₹1 Lakh under your mattress today, in 10 years, it will still physically be ₹1 Lakh, but it will only buy you ₹50,000 worth of goods.</p>
         
-        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-[rgba(255,255,255,0.05)] pb-2">Why You Must Invest to Survive</h3>
+        <h3 className="font-serif text-xl text-on-surface mb-3 border-b border-outline-var/10 pb-2">Why You Must Invest to Survive</h3>
         <p className="mb-6">Investing is not a luxury for the rich; it is a survival mechanism for the middle class. To actually build wealth, your money <em>must</em> be parked in vehicles that grow faster than the inflation rate. If inflation is running at 6%, your portfolio needs to generate 10%, 12%, or 14% to ensure your future self can actually afford to live.</p>
 
         <p className="italic opacity-70 border-l-2 border-[rgba(255,183,125,0.5)] pl-4 py-2 mt-6 bg-[rgba(255,255,255,0.02)] rounded-r-lg">So, if cash and FDs are slowly making us poorer, where exactly do we deploy our SIPs to beat this invisible thief? We need to build an army...</p>
@@ -306,7 +306,7 @@ export const enChapters = [
 
         <p className="mb-8">Because you didn't stop your SIP during the crash, you hoovered up double the units at a massive discount. When the market eventually hits new highs, those cheap units act as a rocket booster for your overall portfolio value.</p>
 
-        <div className="bg-[#1c1b1b] border border-[rgba(255,183,125,0.3)] rounded-xl p-6 text-center shadow-2xl">
+        <div className="bg-surface-low border border-primary/30 rounded-xl p-6 text-center shadow-2xl">
           <h4 className="font-serif text-2xl text-on-surface mb-3">The Ultimate Rule of SIPs</h4>
           <p className="text-on-surface-var">The single worst financial mistake you can ever make is logging into your net banking and "pausing" your SIP because the market is down. Pausing your SIP during a crash is like walking out of the supermarket just as they announce a 50% discount on groceries. <br/><br/><strong className="text-mango-text text-lg">Hold your nerve. Stay automated. Let the math do the heavy lifting.</strong></p>
         </div>

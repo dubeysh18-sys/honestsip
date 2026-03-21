@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ThemeToggle from './ThemeToggle';
+import compassLogo from '../assets/compass.png';
 
 const NAV_ITEMS = [
   { path: '/', icon: '📊', labelKey: 'menu.mobile.sip' },
@@ -53,7 +54,7 @@ export default function Layout({ children }) {
         <Link to="/" className="flex items-center" aria-label="Home">
           <div className="flex items-center gap-2 font-serif text-2xl font-bold tracking-tight text-on-surface">
             <img 
-              src="/src/assets/compass.png" 
+              src={compassLogo} 
               alt="Compass Logo" 
               className="w-24 h-24 object-contain -ml-8 -mr-6 scale-[1.4]" 
             />

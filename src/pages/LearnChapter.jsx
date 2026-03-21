@@ -52,7 +52,7 @@ export default function LearnChapter() {
           <h2 className="font-serif text-[1.4rem] text-on-surface mb-6 hidden md:block">Masterclass Syllabus</h2>
           <div className="flex flex-col gap-2 relative">
             {/* Connecting visual line for desktop */}
-            <div className="absolute left-[1.15rem] top-6 bottom-6 w-[2px] bg-[rgba(255,255,255,0.05)] z-0 hidden md:block" />
+            <div className="absolute left-[1.15rem] top-6 bottom-6 w-[2px] bg-outline-var/10 z-0 hidden md:block" />
             
             {LEARN_CHAPTERS.map((c, idx) => {
               const isActive = c.id === chapter.id;
