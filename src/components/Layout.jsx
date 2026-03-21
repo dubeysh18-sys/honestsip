@@ -88,7 +88,7 @@ export default function Layout({ children }) {
           style={{ background: 'rgba(0,0,0,0.5)' }}
         >
           <nav
-            className="absolute top-0 right-0 h-full w-72 overflow-y-auto py-20 px-6 border-l border-outline-var/10 shadow-2xl"
+            className="absolute top-0 right-0 h-full max-w-[85vw] w-64 sm:w-72 md:w-80 overflow-y-auto pt-36 pb-8 px-5 border-l border-outline-var/10 shadow-2xl pointer-events-auto"
             style={{ background: 'rgb(var(--color-surface-low))' }}
             onClick={(e) => e.stopPropagation()}
           >
