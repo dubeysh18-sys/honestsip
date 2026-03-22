@@ -4,17 +4,13 @@ import { useTranslation } from 'react-i18next';
 import ThemeToggle from './ThemeToggle';
 import compassLogo from '../assets/compass.png';
 
-const NAV_ITEMS = [
-  { path: '/', icon: '📊', labelKey: 'menu.mobile.sip' },
-  { path: '/goals', icon: '🏁', labelKey: 'menu.mobile.goals' },
-  { path: '/on-track', icon: '✅', labelKey: 'menu.mobile.track' },
-  { path: '/learn', icon: '📚', labelKey: 'menu.mobile.learn' },
-];
 
 const MENU_ITEMS = [
-  { path: '/',          labelKey: 'menu.items.forward' },
-  { path: '/reverse',  labelKey: 'menu.items.reverse' },
-  { path: '/goals',    labelKey: 'menu.items.goals' },
+  { path: '/',          labelKey: 'menu.items.hub' },
+  { path: '/sip',       labelKey: 'menu.items.forward' },
+  { path: '/reverse',   labelKey: 'menu.items.reverse' },
+  { path: '/lumpsum',   labelKey: 'menu.items.lumpsum' },
+  { path: '/goals',     labelKey: 'menu.items.goals' },
   { path: '/retirement', labelKey: 'menu.items.retirement' },
   { path: '/education', labelKey: 'menu.items.education' },
   { path: '/emergency', labelKey: 'menu.items.emergency' },
@@ -105,7 +101,13 @@ export default function Layout({ children }) {
               </select>
             </div>
 
-            <p className="label-overline text-on-surface-var mb-6">{t('menu.calculators')}</p>
+            <div className="flex items-center gap-2 mb-6">
+              <span className="flex-1 h-px opacity-10" style={{ background: 'rgb(var(--color-on-surface))' }} />
+              <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-on-surface-var opacity-40 select-none">
+                {t('menu.calculators')}
+              </p>
+              <span className="flex-1 h-px opacity-10" style={{ background: 'rgb(var(--color-on-surface))' }} />
+            </div>
             {MENU_ITEMS.map((item) => (
               <Link
                 key={item.path}
@@ -139,27 +141,6 @@ export default function Layout({ children }) {
       <main className="pt-32">
         {children}
       </main>
-
-      {/* Mobile bottom nav */}
-      <nav className="mobile-nav md:hidden">
-        <div className="flex">
-          {NAV_ITEMS.map((item) => {
-            const active = location.pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex-1 flex flex-col items-center py-3 gap-1 transition-colors ${
-                  active ? 'mango-text' : 'text-on-surface-var opacity-50'
-                }`}
-              >
-                <span className="text-lg">{item.icon}</span>
-                <span className="text-xs font-sans font-medium">{t(item.labelKey)}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
 
       {/* Desktop disclaimer */}
       <footer className="hidden md:block text-center py-8 px-6 text-xs text-on-surface-var opacity-30 max-w-4xl mx-auto">

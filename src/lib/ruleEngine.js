@@ -42,16 +42,17 @@ export function lumpSumFV(L, i, n) {
 // This is exactly: sipFV(P×(1+g)^(k-1), i, monthsRemaining)
 // Total = Σ FV_k  (k = 1 to Y)
 // ---------------------------------------------------------------------------
-export function stepUpSIPFV(P, g, annualRate, years) {
-  const i = monthlyRate(annualRate);
-  const n = years * 12;
+export function stepUpSIPFV(P, g, annualRate, years, freq = 'monthly') {
+  const isQuarterly = freq === 'quarterly';
+  const i = isQuarterly ? quarterlyRate(annualRate) : monthlyRate(annualRate);
+  const periodsInYear = isQuarterly ? 4 : 12;
+  const nTotal = years * periodsInYear;
   let total = 0;
   for (let k = 1; k <= years; k++) {
     const sipThisYear = P * Math.pow(1 + g, k - 1);
-    const monthsRemaining = n - 12 * (k - 1);
-    if (monthsRemaining <= 0) break;
-    // FV per PRD § 3.4: each year's payments treated as annuity due for monthsRemaining periods
-    total += sipFV(sipThisYear, i, monthsRemaining);
+    const periodsRemaining = nTotal - periodsInYear * (k - 1);
+    if (periodsRemaining <= 0) break;
+    total += sipFV(sipThisYear, i, periodsRemaining);
   }
   return total;
 }
@@ -66,13 +67,13 @@ export function reverseSIP(FV, i, n) {
 }
 
 // Reverse Step-Up SIP: Binary search (goal seek)
-export function reverseStepUpSIP(targetFV, g, annualRate, years, tolerance = 1) {
+export function reverseStepUpSIP(targetFV, g, annualRate, years, freq = 'monthly', tolerance = 1) {
   let lo = 100;
-  let hi = 500000;
+  let hi = 5000000;
   let mid;
   for (let iter = 0; iter < 100; iter++) {
     mid = (lo + hi) / 2;
-    const computed = stepUpSIPFV(mid, g, annualRate, years);
+    const computed = stepUpSIPFV(mid, g, annualRate, years, freq);
     if (Math.abs(computed - targetFV) <= tolerance) break;
     if (computed < targetFV) lo = mid;
     else hi = mid;

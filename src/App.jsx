@@ -3,8 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 
 // Lazy-load each calculator for performance
+const Home          = lazy(() => import('./pages/Home'));
 const ForwardSIP    = lazy(() => import('./pages/ForwardSIP'));
 const ReverseSIP    = lazy(() => import('./pages/ReverseSIP'));
+const LumpsumCalc   = lazy(() => import('./pages/LumpsumCalculator'));
 const GoalPlanner   = lazy(() => import('./pages/GoalPlanner'));
 const Retirement    = lazy(() => import('./pages/RetirementPlanner'));
 const Education     = lazy(() => import('./pages/ChildEducation'));
@@ -31,8 +33,10 @@ export default function App() {
       <Layout>
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route path="/"           element={<ForwardSIP />} />
+            <Route path="/"           element={<Home />} />
+            <Route path="/sip"         element={<ForwardSIP />} />
             <Route path="/reverse"    element={<ReverseSIP />} />
+            <Route path="/lumpsum"    element={<LumpsumCalc />} />
             <Route path="/goals"      element={<GoalPlanner />} />
             <Route path="/retirement" element={<Retirement />} />
             <Route path="/education"  element={<Education />} />

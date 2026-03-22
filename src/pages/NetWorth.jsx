@@ -155,9 +155,6 @@ export default function NetWorth() {
           </p>
         </div>
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          For educational purposes. Real estate valuation is self-reported. Net worth is a snapshot, not guaranteed value.
-        </p>
       </section>
     </div>
   );

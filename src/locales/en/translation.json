@@ -4,9 +4,11 @@
     "disclaimer": "HonestSIP calculators are for educational purposes only. Not financial advice. Tax calculations based on Budget 2024 rates.",
     "footer": "HonestSIP calculators are for educational and planning purposes only. They do not constitute financial advice. Mutual fund investments are subject to market risks. Tax calculations effective July 23, 2024 (Budget 2024). Peer benchmarking based on RBI, AMFI, WID India, PLFS data.",
     "items": {
+      "hub": "Hub",
       "forward": "Forward SIP Calculator",
       "learn": "Honest Masterclass",
       "reverse": "Reverse SIP Calculator",
+      "lumpsum": "Lumpsum Calculator",
       "goals": "Goal Planner",
       "retirement": "Retirement Planner",
       "education": "Child's Education Fund",

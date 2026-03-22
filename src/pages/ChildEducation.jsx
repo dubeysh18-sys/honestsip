@@ -103,14 +103,19 @@ export default function ChildEducation() {
 
           <div className="mb-5">
             <p className="label-overline mb-2">{t('childEdu.child_age')}</p>
-            <SliderField
-              label=""
-              value={childAge}
-              min={0}
-              max={17}
-              unit=" yrs"
-              onChange={setChild}
-            />
+            <div className="flex items-baseline gap-2 border-b border-outline-var/20 focus-within:border-primary pb-1 transition-colors">
+              <input
+                type="number"
+                value={childAge}
+                min={0}
+                max={17}
+                onChange={e => setChild(Math.min(17, Math.max(0, Number(e.target.value))))}
+                onFocus={e => e.target.select()}
+                className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
+                style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+              />
+              <span className="font-sans text-on-surface-var text-sm">yrs</span>
+            </div>
             <p className="text-xs text-on-surface-var opacity-50 mt-1">
               {t('childEdu.inv_horizon', { years: yearsToGoal })}
             </p>
@@ -138,9 +143,6 @@ export default function ChildEducation() {
           </p>
         </div>
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          {t('childEdu.disclaimer', { years: courseInfo.years })}
-        </p>
       </section>
     </div>
   );

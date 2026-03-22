@@ -35,7 +35,7 @@ export default function FinancialTwin({ sipAmount, context = 'SIP' }) {
             className="btn-primary text-xs px-4 py-2 flex-shrink-0"
             style={{ padding: '0.5rem 1rem', fontSize: '0.75rem' }}
           >
-            Unlock
+            Explore
           </button>
         </div>
         <button

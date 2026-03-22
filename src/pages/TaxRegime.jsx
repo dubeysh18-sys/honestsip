@@ -191,11 +191,6 @@ export default function TaxRegime() {
           </p>
         </div>
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          Tax calculations per Budget 2024 (Finance Act 2024), effective FY 2024-25.
-          Includes 4% Health & Education cess. Surcharge applied where applicable.
-          Consult a CA for personalised tax advice.
-        </p>
       </section>
     </div>
   );

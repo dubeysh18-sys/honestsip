@@ -105,9 +105,20 @@ export default function FinancialHealthScore() {
 
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <p className="label-overline mb-1">Age</p>
-              <input type="number" value={age} min={18} max={80}
-                onChange={e => setAge(Number(e.target.value))} className="input-ghost text-center" />
+              <p className="label-overline mb-2">Age</p>
+              <div className="flex items-baseline gap-2 border-b border-outline-var/20 focus-within:border-primary pb-1 transition-colors">
+                <input
+                  type="number"
+                  value={age}
+                  min={18}
+                  max={80}
+                  onChange={e => setAge(Number(e.target.value))}
+                  onFocus={e => e.target.select()}
+                  className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
+                  style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+                />
+                <span className="font-sans text-on-surface-var text-sm">yrs</span>
+              </div>
             </div>
             <NumberInput label="Net Worth (₹)" value={netWorth} onChange={setNetWorth} prefix="₹" />
           </div>
@@ -195,10 +206,6 @@ export default function FinancialHealthScore() {
           </div>
         )}
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          Score weights: Savings Rate 20%, Emergency Fund 20%, FOIR 20%, Net Worth vs Peer 20%, Insurance 15%, Financial Hygiene 5%.
-          Based on RBI FSR, IRDAI ARDR 2024 data. Educational purposes only.
-        </p>
       </section>
     </div>
   );

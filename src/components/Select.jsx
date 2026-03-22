@@ -38,7 +38,7 @@ export default function Select({ label, value, onChange, options = [] }) {
         className={`w-full flex items-baseline justify-between border-b pb-1 transition-colors cursor-pointer text-left focus:outline-none ${open ? 'border-primary' : 'border-outline-var/20 hover:border-outline-var/50'}`}
       >
         <span
-          className="bg-transparent text-on-surface font-serif text-2xl"
+          className="bg-transparent text-on-surface font-serif text-lg"
           style={{ fontFamily: 'Newsreader, Georgia, serif' }}
         >
           {selected?.label}
@@ -75,7 +75,7 @@ export default function Select({ label, value, onChange, options = [] }) {
                 }`}
               >
                 <span>
-                  <span className={`font-serif text-lg block leading-snug ${isSelected ? 'text-on-surface' : 'text-on-surface-var'}`}>
+                  <span className={`font-serif text-base block leading-snug ${isSelected ? 'text-on-surface' : 'text-on-surface-var'}`}>
                     {opt.label}
                   </span>
                   {opt.sublabel && (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function NumberInput({
   label,
@@ -10,11 +10,34 @@ export default function NumberInput({
   placeholder = '0',
   hint,
 }) {
+  const [localValue, setLocalValue] = useState(value === 0 ? '' : String(value));
+  const isFocused = useRef(false);
+
+  // Sync external value changes (e.g. reset) only when not actively editing
+  useEffect(() => {
+    if (!isFocused.current) {
+      setLocalValue(value === 0 ? '' : String(value));
+    }
+  }, [value]);
+
+  const handleFocus = (e) => {
+    isFocused.current = true;
+    // Select all text so typing immediately replaces the existing value
+    e.target.select();
+  };
+
   const handleChange = (e) => {
     const raw = e.target.value.replace(/[^0-9]/g, '');
+    setLocalValue(raw);
     const num = raw ? Number(raw) : 0;
     if (max !== undefined && num > max) return;
     onChange(num);
+  };
+
+  const handleBlur = () => {
+    isFocused.current = false;
+    // If field left empty, revert display to current value (keep 0 as empty display)
+    setLocalValue(value === 0 ? '' : String(value));
   };
 
   return (
@@ -27,11 +50,15 @@ export default function NumberInput({
           </span>
         )}
         <input
-          type="number"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
           min={min}
           max={max}
-          value={value || ''}
+          value={localValue}
+          onFocus={handleFocus}
           onChange={handleChange}
+          onBlur={handleBlur}
           placeholder={placeholder}
           className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
           style={{ fontFamily: 'Newsreader, Georgia, serif' }}

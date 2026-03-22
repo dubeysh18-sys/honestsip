@@ -5,7 +5,7 @@ import Select from '../components/Select';
 import CostOfWaiting from '../components/CostOfWaiting';
 import FinancialTwin from '../components/FinancialTwin';
 import {
-  monthlyRate, reverseSIP, reverseStepUpSIP, inflationAdjustedGoal,
+  monthlyRate, quarterlyRate, reverseSIP, reverseStepUpSIP, inflationAdjustedGoal,
   taxEngine, stepUpSIPFV, sipFV, totalInvestedStepUp, totalInvestedFlat,
   formatINR, formatINRLakh, costOfWaiting,
 } from '../lib/ruleEngine';
@@ -33,8 +33,11 @@ export default function ReverseSIP() {
     const inf = inflation / 100;
     const g = stepUp / 100;
     const el = exitLoad / 100;
-    const n = years * 12;
-    const i = monthlyRate(r);
+
+    // Frequency-aware period count & periodic rate
+    const isQuarterly = freq === 'quarterly';
+    const n = isQuarterly ? years * 4 : years * 12;
+    const i = isQuarterly ? quarterlyRate(r) : monthlyRate(r);
 
     // Effective goal: inflate if toggle ON
     const goalAdjusted = inflateGoal ? inflationAdjustedGoal(goal, inf, years) : goal;
@@ -45,38 +48,33 @@ export default function ReverseSIP() {
     // Exit load reduces effective corpus
     const goalAfterExitLoad = goalAdjusted / (1 - el);
 
-    // Required corpus before tax — iterative solve
-    // We need: fvGross - tax(fvGross - totalInvested) = goalAfterExitLoad
-    // Approximate: fvGross ≈ goalAfterExitLoad + expected_tax
     // For LTCG equity, effective tax rate is roughly: 12.5% × 1.04 × (1 - 125000/gains)
-    // We'll do a simple gross-up
     let goalPreTax = goalAfterExitLoad;
     if (selectedTax.assetClass === 'equity' && selectedTax.holding > 1) {
-      // Iterative gross-up: assume ~10% effective tax on gains
       goalPreTax = goalAfterExitLoad / 0.93;
     } else if (selectedTax.assetClass === 'equity') {
-      goalPreTax = goalAfterExitLoad / (1 - 0.20 * 1.04 * 0.5); // rough 50% gains ratio
+      goalPreTax = goalAfterExitLoad / (1 - 0.20 * 1.04 * 0.5);
     }
 
-    // Lump sum contribution
+    // Lump sum contribution — using same periodic rate
     const lumpFV = lumpSum > 0 ? lumpSum * Math.pow(1 + i, n) : 0;
     const netGoal = Math.max(0, goalPreTax - lumpFV);
 
-    // Required flat SIP
+    // Required flat SIP (per period — monthly or quarterly)
     const flatSIP = netGoal > 0 ? Math.ceil(reverseSIP(netGoal, i, n)) : 0;
 
-    // Required step-up SIP
-    const stepUpSIP = netGoal > 0 ? reverseStepUpSIP(netGoal, g, r, years) : 0;
+    // Required step-up SIP (always annual step-up applied per year)
+    const stepUpSIP = netGoal > 0 ? reverseStepUpSIP(netGoal, g, r, years, freq) : 0;
 
-    // Total to be invested (flat)
+    // Total invested (flat: flatSIP × n periods)
     const totalFlatInvested = flatSIP * n + lumpSum;
     const totalStepUpInvested = totalInvestedStepUp(stepUpSIP, g, years) + lumpSum;
 
-    // Verify: compute actual FV of step-up SIP
+    // Verify: compute actual FV
     const stepUpFV = stepUpSIPFV(stepUpSIP, g, r, years);
     const flatFV   = sipFV(flatSIP, i, n);
 
-    // Starting 1 month later means SIP must increase by:
+    // Cost of waiting: one period later (month or quarter)
     const cowFlat   = costOfWaiting(flatSIP, r, n, 0);
     const reqSIPLaterFlat = reverseSIP(goalPreTax, i, n - 1);
     const sipIncrease = Math.max(0, Math.ceil(reqSIPLaterFlat - flatSIP));
@@ -92,6 +90,7 @@ export default function ReverseSIP() {
       sipIncrease,
       flatFV:                Math.round(flatFV),
       stepUpFV:              Math.round(stepUpFV),
+      isQuarterly,
     };
   }, [goal, years, rate, inflation, inflateGoal, taxType, exitLoad, lumpSum, stepUp, freq]);
 
@@ -265,10 +264,6 @@ export default function ReverseSIP() {
         <FinancialTwin sipAmount={results.flatSIP} context="required SIP" />
 
         {/* Disclaimer */}
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          HonestSIP calculators are for educational purposes only. Not financial advice.
-          Tax calculations per Budget 2024. Actual returns may vary.
-        </p>
       </section>
     </div>
   );

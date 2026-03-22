@@ -117,9 +117,20 @@ export default function OnTrack() {
         <div className="section-card mb-4">
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <p className="label-overline mb-1">Your Age</p>
-              <input type="number" value={age} min={18} max={70}
-                onChange={e => setAge(Number(e.target.value))} className="input-ghost text-center" />
+              <p className="label-overline mb-2">Your Age</p>
+              <div className="flex items-baseline gap-2 border-b border-outline-var/20 focus-within:border-primary pb-1 transition-colors">
+                <input
+                  type="number"
+                  value={age}
+                  min={18}
+                  max={70}
+                  onChange={e => setAge(Number(e.target.value))}
+                  onFocus={e => e.target.select()}
+                  className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
+                  style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+                />
+                <span className="font-sans text-on-surface-var text-sm">yrs</span>
+              </div>
             </div>
             <NumberInput label="Annual Income (₹)" value={annualIncome} onChange={setIncome} prefix="₹" />
           </div>
@@ -225,10 +236,6 @@ export default function OnTrack() {
           </p>
         </div>
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          Peer benchmarks from Fidelity milestones adapted for India, WID India 2024, RBI FSR.
-          Individual results may vary significantly. For educational purposes only.
-        </p>
       </section>
     </div>
   );

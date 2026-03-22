@@ -148,10 +148,6 @@ export default function EmergencyFund() {
           </p>
         </div>
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          Source: RBI FSR guidance + standard personal finance practice.
-          Emergency fund should be in liquid instruments: savings account, liquid MF, short-term FD.
-        </p>
       </section>
     </div>
   );

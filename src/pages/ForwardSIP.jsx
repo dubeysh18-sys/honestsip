@@ -70,7 +70,7 @@ export default function ForwardSIP() {
 
     let fvSIP;
     if (g > 0) {
-      fvSIP = stepUpSIPFV(sip, g, r, years);
+      fvSIP = stepUpSIPFV(sip, g, r, years, freq);
     } else {
       fvSIP = sipFV(sip, i, n);
     }
@@ -126,8 +126,8 @@ export default function ForwardSIP() {
 
   return (
     <div className="page-section pb-28 md:pb-12">
-      <div className="md:col-span-2 grid md:grid-cols-2 gap-8 mb-4">
-        <div>
+      <section aria-label="SIP Calculator Inputs">
+        <div className="mb-8">
           <p className="label-overline text-on-surface-var mb-2">{t('forwardSIP.header_overline')}</p>
           <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-3 leading-tight">
             {t('forwardSIP.header_title1')}<br />
@@ -138,43 +138,6 @@ export default function ForwardSIP() {
           </p>
         </div>
 
-        <div className="cta-card">
-          <p className="label-overline mb-2 opacity-90 text-white">{t('forwardSIP.res_maturity')}</p>
-          <p className="result-amount animate-result">{formatINR(results.fvGross, true)}</p>
-          <p className="text-xs text-on-surface-var mt-1 opacity-60">
-            {t('forwardSIP.res_nominal', { years, rate })}
-          </p>
-
-          <div className="grid grid-cols-2 gap-3 mt-5">
-            <div className="inner-card">
-              <p className="label-overline text-on-surface-var mb-1">{t('forwardSIP.res_invested')}</p>
-              <p className="result-amount-sm">{formatINRLakh(results.totalInvested)}</p>
-            </div>
-            <div className="inner-card">
-              <p className="label-overline sage-text mb-1">{t('forwardSIP.res_gains')}</p>
-              <p className="result-amount-sm sage-text">{formatINRLakh(results.gains)}</p>
-            </div>
-            {showInflation && (
-              <div className="inner-card">
-                <p className="label-overline lavender-text mb-1">{t('forwardSIP.res_real', { inflation })}</p>
-                <p className="result-amount-sm lavender-text">{formatINRLakh(results.fvReal)}</p>
-              </div>
-            )}
-            <div className="inner-card">
-              <p className="label-overline text-on-surface-var mb-1">{t('forwardSIP.res_post_tax', { taxType: selectedAsset.label })}</p>
-              <p className="result-amount-sm">{formatINRLakh(results.fvNet)}</p>
-            </div>
-          </div>
-
-          {results.tax > 0 && (
-            <p className="text-xs text-on-surface-var opacity-50 mt-3">
-              {t('forwardSIP.res_tax', { tax: formatINR(results.tax) })}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <section aria-label="SIP Calculator Inputs">
         <div className="section-card mb-4 mt-2 md:mt-0">
           <NumberInput
             label={t('forwardSIP.inputs_title')}
@@ -289,6 +252,41 @@ export default function ForwardSIP() {
       </section>
 
       <section aria-label="SIP Calculator Results">
+        <div className="cta-card mb-4">
+          <p className="label-overline mb-2 opacity-90 text-white">{t('forwardSIP.res_maturity')}</p>
+          <p className="result-amount animate-result">{formatINR(results.fvGross, true)}</p>
+          <p className="text-xs text-on-surface-var mt-1 opacity-60">
+            {t('forwardSIP.res_nominal', { years, rate })}
+          </p>
+
+          <div className="grid grid-cols-2 gap-3 mt-5">
+            <div className="inner-card">
+              <p className="label-overline text-on-surface-var mb-1">{t('forwardSIP.res_invested')}</p>
+              <p className="result-amount-sm">{formatINRLakh(results.totalInvested)}</p>
+            </div>
+            <div className="inner-card">
+              <p className="label-overline sage-text mb-1">{t('forwardSIP.res_gains')}</p>
+              <p className="result-amount-sm sage-text">{formatINRLakh(results.gains)}</p>
+            </div>
+            {showInflation && (
+              <div className="inner-card">
+                <p className="label-overline lavender-text mb-1">{t('forwardSIP.res_real', { inflation })}</p>
+                <p className="result-amount-sm lavender-text">{formatINRLakh(results.fvReal)}</p>
+              </div>
+            )}
+            <div className="inner-card">
+              <p className="label-overline text-on-surface-var mb-1">{t('forwardSIP.res_post_tax', { taxType: selectedAsset.label })}</p>
+              <p className="result-amount-sm">{formatINRLakh(results.fvNet)}</p>
+            </div>
+          </div>
+
+          {results.tax > 0 && (
+            <p className="text-xs text-on-surface-var opacity-50 mt-3">
+              {t('forwardSIP.res_tax', { tax: formatINR(results.tax) })}
+            </p>
+          )}
+        </div>
+
         <CorpusWaterfall waterfallData={results.waterfallData} assetClass={assetClass} />
         <CostOfWaiting delta={results.cow} />
         <div className="section-card mt-4">
@@ -303,9 +301,6 @@ export default function ForwardSIP() {
           />
         </div>
         <FinancialTwin sipAmount={sip} context="monthly SIP" />
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          {t('forwardSIP.disclaimer')}
-        </p>
       </section>
     </div>
   );

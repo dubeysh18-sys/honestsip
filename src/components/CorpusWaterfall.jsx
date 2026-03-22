@@ -73,83 +73,100 @@ export default function CorpusWaterfall({
     tip = t('waterfall.tips.good');
   }
 
+  const lossPct = ((Math.abs(grossCorpus - realTakeHome) / grossCorpus) * 100).toFixed(1);
+
   return (
-    <div className="section-card mt-6 border border-[rgba(255,183,125,0.2)]" style={{ background: 'rgba(28,27,27,0.5)' }}>
-      {!isExpanded ? (
+    <>
+      {/* Trigger Card: Simple Teaser */}
+      <div 
+        className="section-card mt-6 border border-[rgba(255,183,125,0.15)] shadow-xl relative overflow-hidden" 
+        style={{ background: 'linear-gradient(165deg, #1A1A1A 0%, #2D0A0A 100%)' }}
+      >
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(255,183,125,0.15)] to-transparent" />
         <button 
           onClick={() => setIsExpanded(true)}
-          className="w-full text-left"
+          className="w-full text-left p-1"
         >
           <div className="flex justify-between items-center group">
-            <p className="text-sm text-on-surface-var leading-relaxed pr-4">
-              {t('waterfall.teaser_start')} <strong className="text-on-surface">{formatINRLakh(grossCorpus)}</strong> {t('waterfall.teaser_mid')} <strong className="text-on-surface">{formatINRLakh(realTakeHome)}</strong> {t('waterfall.teaser_end')} <span className="mango-text group-hover:underline">{t('waterfall.teaser_link')}</span>
+            <p className="text-sm text-on-surface-var leading-relaxed pr-4 opacity-90">
+              {t('waterfall.teaser_start')} <strong className="text-on-surface">{formatINRLakh(grossCorpus)}</strong> {t('waterfall.teaser_mid')} <strong className="text-on-surface">{formatINRLakh(realTakeHome)}</strong> {t('waterfall.teaser_end')} <span className="mango-text group-hover:underline font-semibold ml-1">{t('waterfall.teaser_link')}</span>
             </p>
           </div>
         </button>
-      ) : (
-        <div className="animate-fade-in">
-          <div className="flex justify-between items-center mb-6 border-b border-[rgba(255,255,255,0.05)] pb-4">
-            <h3 className="font-serif text-2xl text-on-surface">{t('waterfall.title')}</h3>
-            <button onClick={() => setIsExpanded(false)} className="text-xs text-on-surface-var hover:text-on-surface">
-              {t('waterfall.collapse')}
-            </button>
-          </div>
+      </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm whitespace-nowrap">
-              <thead>
-                <tr className="text-on-surface-var opacity-50 border-b border-[rgba(255,255,255,0.05)]">
-                  <th className="pb-3 font-medium">{t('waterfall.col_what')}</th>
-                  <th className="pb-3 font-medium text-right">{t('waterfall.col_amount')}</th>
-                  <th className="pb-3 font-medium text-right">{t('waterfall.col_total')}</th>
-                  <th className="pb-3 font-medium text-right">{t('waterfall.col_pct')}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r, i) => {
-                  const pct = ((Math.abs(r.amount) / grossCorpus) * 100).toFixed(1);
-                  const isDeduction = r.type === 'deduction';
-                  const isTotal = r.type === 'header' || r.type === 'subtotal' || r.type === 'final';
-                  
-                  return (
-                    <tr key={i} className={`border-b border-[rgba(255,255,255,0.02)] ${isTotal ? 'font-semibold text-on-surface' : 'text-on-surface-var'}`}>
-                      <td className="py-3 pr-4 relative group cursor-help">
-                        {r.tooltip ? (
-                          <span className="border-b border-dashed border-[rgba(255,255,255,0.2)] pb-0.5">{r.label}</span>
-                        ) : (
-                          <span>{r.label}</span>
-                        )}
-                        {r.tooltip && (
-                          <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-surface-high text-xs text-on-surface rounded-lg shadow-2xl z-10 whitespace-normal border border-outline-var/20 leading-relaxed">
-                            {r.tooltip}
-                          </div>
-                        )}
-                      </td>
-                      <td className={`py-3 text-right ${isDeduction ? 'text-red-400 opacity-80' : ''}`}>
-                        {r.amount === 0 ? '₹0' : formatINR(r.amount)}
-                      </td>
-                      <td className="py-3 text-right font-mono text-xs opacity-70">
-                        {r.running !== null ? formatINRLakh(r.running) : '—'}
-                      </td>
-                      <td className="py-3 text-right opacity-50">
-                        {r.amount === grossCorpus ? '100%' : (r.running === null ? '—' : (pct === '0.0' ? '<0.1%' : `${pct}%`))}
-                      </td>
+      {/* Modal Popup */}
+      {isExpanded && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 transition-all animate-fade-in"
+          style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
+          onClick={() => setIsExpanded(false)}
+        >
+          <div 
+            className="w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border border-[rgba(255,183,125,0.15)] shadow-2xl relative flex flex-col"
+            style={{ background: 'linear-gradient(165deg, #1A1A1A 0%, #200808 100%)' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-6 md:p-8 flex justify-between items-center border-b border-white/5">
+              <h3 className="font-serif text-2xl text-on-surface">{t('waterfall.title')}</h3>
+              <button 
+                onClick={() => setIsExpanded(false)}
+                className="w-8 h-8 rounded-full bg-surface-highest flex items-center justify-center text-on-surface-var hover:text-on-surface transition-colors"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Body: Scrollable Table */}
+            <div className="flex-1 overflow-auto p-4 md:p-8">
+              <div className="min-w-full inline-block align-middle">
+                <table className="w-full text-left text-xs md:text-sm whitespace-nowrap">
+                  <thead>
+                    <tr className="text-on-surface-var opacity-40 border-b border-white/5">
+                      <th className="pb-4 font-medium">{t('waterfall.col_what')}</th>
+                      <th className="pb-4 font-medium text-right">{t('waterfall.col_amount')}</th>
+                      <th className="pb-4 font-medium text-right">{t('waterfall.col_total')}</th>
+                      <th className="pb-4 font-medium text-right">{t('waterfall.col_pct')}</th>
                     </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {rows.map((r, i) => {
+                      const pctNum = (Math.abs(r.amount) / grossCorpus) * 100;
+                      const pctStr = pctNum.toFixed(1);
+                      const isTotal = r.type === 'header' || r.type === 'subtotal' || r.type === 'final';
+                      const isDeduction = r.type === 'deduction';
 
-          <div className="mt-6 p-4 rounded-xl bg-[rgba(255,183,125,0.05)] border border-[rgba(255,183,125,0.1)]">
-            <p className="label-overline mango-text mb-2">{t('waterfall.opt_tip')}</p>
-            <p className="text-xs text-on-surface-var leading-relaxed">{tip}</p>
+                      return (
+                        <tr key={i} className={isTotal ? 'font-semibold text-on-surface' : 'text-on-surface-var opacity-80'}>
+                          <td className="py-4 pr-4">
+                            <span className={r.tooltip ? 'border-b border-dashed border-white/20' : ''}>{r.label}</span>
+                          </td>
+                          <td className={`py-4 text-right font-mono ${isDeduction ? 'text-red-400/80' : ''}`}>
+                            {r.amount === 0 ? '₹0' : formatINR(r.amount)}
+                          </td>
+                          <td className="py-4 text-right opacity-60 font-mono">
+                            {r.running !== null ? formatINRLakh(r.running) : '—'}
+                          </td>
+                          <td className="py-4 text-right opacity-40 font-mono">
+                            {r.amount === grossCorpus ? '100%' : (r.running === null ? '—' : (pctStr === '0.0' ? '<0.1%' : `${pctStr}%`))}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Disclaimer Only */}
+              <p className="text-[10px] text-on-surface-var opacity-30 mt-8 pt-4 border-t border-white/5 leading-relaxed">
+                {t('waterfall.footer_note')}
+              </p>
+            </div>
           </div>
-          <p className="text-[10px] text-on-surface-var opacity-30 mt-4 leading-relaxed">
-            {t('waterfall.footer_note')}
-          </p>
         </div>
       )}
-    </div>
+    </>
   );
 }

@@ -142,9 +142,6 @@ export default function SalaryLifestyle() {
           </p>
         </div>
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          50/30/20 adapted from Elizabeth Warren's framework. Percentages adjusted for Indian metro cost structures.
-        </p>
       </section>
     </div>
   );

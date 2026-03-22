@@ -55,25 +55,35 @@ export default function RetirementPlanner() {
           <div className="grid grid-cols-2 gap-4 mb-5">
             <div>
               <p className="label-overline mb-2">Current Age</p>
-              <input
-                type="number"
-                className="input-ghost text-center"
-                value={currentAge}
-                min={18}
-                max={70}
-                onChange={e => setCurrentAge(Number(e.target.value))}
-              />
+              <div className="flex items-baseline gap-2 border-b border-outline-var/20 focus-within:border-primary pb-1 transition-colors">
+                <input
+                  type="number"
+                  value={currentAge}
+                  min={18}
+                  max={70}
+                  onChange={e => setCurrentAge(Number(e.target.value))}
+                  onFocus={e => e.target.select()}
+                  className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
+                  style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+                />
+                <span className="font-sans text-on-surface-var text-sm">yrs</span>
+              </div>
             </div>
             <div>
               <p className="label-overline mb-2">Retirement Age</p>
-              <input
-                type="number"
-                className="input-ghost text-center"
-                value={retirementAge}
-                min={currentAge + 1}
-                max={80}
-                onChange={e => setRetirementAge(Number(e.target.value))}
-              />
+              <div className="flex items-baseline gap-2 border-b border-outline-var/20 focus-within:border-primary pb-1 transition-colors">
+                <input
+                  type="number"
+                  value={retirementAge}
+                  min={currentAge + 1}
+                  max={80}
+                  onChange={e => setRetirementAge(Number(e.target.value))}
+                  onFocus={e => e.target.select()}
+                  className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
+                  style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+                />
+                <span className="font-sans text-on-surface-var text-sm">yrs</span>
+              </div>
             </div>
           </div>
 
@@ -224,10 +234,6 @@ export default function RetirementPlanner() {
           </div>
         )}
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          Two-phase retirement model. Corpus withdrawal uses real return (Fisher Equation).
-          EPF return assumption: 8.25% (EPFO FY2023-24). For educational purposes only.
-        </p>
       </section>
     </div>
   );

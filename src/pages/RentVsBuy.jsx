@@ -187,10 +187,6 @@ export default function RentVsBuy() {
           )}
         </div>
 
-        <p className="text-xs text-on-surface-var opacity-30 mt-6 leading-relaxed">
-          Assumes investment return of {investReturn}% for opportunity cost. Property growth is notional.
-          Actual returns depend on location, timing, and market conditions. Educational purposes only.
-        </p>
       </section>
     </div>
   );
