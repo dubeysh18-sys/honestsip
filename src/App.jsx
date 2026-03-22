@@ -58,8 +58,12 @@ function renderPageRoutes() {
 }
 
 export default function App() {
+  const baseUrl = import.meta.env.BASE_URL || '/'
+  const basename =
+    baseUrl === '/' ? undefined : baseUrl.replace(/\/$/, '')
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route element={<Layout />}>
           <Route
