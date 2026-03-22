@@ -29,12 +29,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Custom domain (CNAME) is served at site root — base must be `/`, not `/repo/`.
+      # Optional override: Repo → Settings → Variables → Actions → VITE_BASE_PATH (e.g. / or /repo/)
       - name: Set Vite base path for Pages
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          VITE_BASE_PATH_VAR: ${{ vars.VITE_BASE_PATH }}
         run: |
-          if [ "${{ github.event.repository.name }}" = "${{ github.repository_owner }}.github.io" ]; then
+          if [ -n "$VITE_BASE_PATH_VAR" ]; then
+            echo "VITE_BASE_PATH=$VITE_BASE_PATH_VAR" >> "$GITHUB_ENV"
+          elif [ -f CNAME ]; then
+            echo "VITE_BASE_PATH=/" >> "$GITHUB_ENV"
+          elif [ "$REPO_NAME" = "${REPO_OWNER}.github.io" ]; then
             echo "VITE_BASE_PATH=/" >> "$GITHUB_ENV"
           else
-            echo "VITE_BASE_PATH=/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
+            echo "VITE_BASE_PATH=/$REPO_NAME/" >> "$GITHUB_ENV"
           fi
 
       - name: Build
