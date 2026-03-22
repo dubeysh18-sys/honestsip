@@ -23,13 +23,27 @@ const MENU_ITEMS = [
   { path: '/learn',     labelKey: 'menu.items.learn' },
 ];
 
+const HEADER_BLUR_SCROLL_PX = 12;
+
 export default function Layout({ children }) {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [menuBtnDock, setMenuBtnDock] = React.useState(null);
+  const menuBtnWrapRef = React.useRef(null);
+  const [headerScrolled, setHeaderScrolled] = React.useState(false);
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = React.useState(
     () => localStorage.getItem('theme') || 'dark'
   );
+
+  React.useEffect(() => {
+    const onScroll = () => {
+      setHeaderScrolled(window.scrollY > HEADER_BLUR_SCROLL_PX);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   React.useEffect(() => {
     document.documentElement.lang = i18n.language.split('-')[0];
@@ -40,16 +54,41 @@ export default function Layout({ children }) {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  const closeMenu = () => {
+    setMenuBtnDock(null);
+    setMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    if (menuOpen) {
+      closeMenu();
+      return;
+    }
+    const el = menuBtnWrapRef.current;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      setMenuBtnDock({
+        top: r.top,
+        left: r.left,
+        width: r.width,
+        height: r.height,
+      });
+    }
+    setMenuOpen(true);
+  };
+
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
-    setMenuOpen(false);
+    closeMenu();
   };
 
   return (
     <div className="min-h-screen text-on-surface transition-colors duration-300" style={{ backgroundColor: 'rgb(var(--color-surface))' }}>
       {/* Top Nav */}
       <header
-        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 py-4 backdrop-blur-md transition-colors duration-300"
+        className={`fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 pt-4 transition-all duration-300 ${
+          headerScrolled ? 'backdrop-blur-md' : 'backdrop-blur-none'
+        }`}
         style={{ backgroundColor: 'rgba(var(--color-surface), 0.95)' }}
       >
         <Link to="/" className="flex items-center" aria-label="Home">
@@ -63,23 +102,32 @@ export default function Layout({ children }) {
           </div>
         </Link>
         <div className="flex items-center gap-4">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="w-8 h-8 flex flex-col justify-center gap-1.5"
-            aria-label="Menu"
-          >
-            <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block h-px bg-on-surface transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-          </button>
+          {menuOpen ? (
+            <span className="h-8 w-8 shrink-0" aria-hidden />
+          ) : (
+            <div ref={menuBtnWrapRef} className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={toggleMenu}
+                className="flex h-8 w-8 flex-col justify-center gap-1.5"
+                aria-label="Menu"
+                aria-expanded={false}
+              >
+                <span className="block h-px bg-on-surface transition-all duration-300" />
+                <span className="block h-px bg-on-surface transition-all duration-300" />
+                <span className="block h-px bg-on-surface transition-all duration-300" />
+              </button>
+            </div>
+          )}
         </div>
       </header>
 
       {/* Slide-out menu */}
       {menuOpen && (
+        <>
         <div
-          className="fixed inset-0 z-30"
-          onClick={() => setMenuOpen(false)}
+          className="fixed inset-0 z-[55]"
+          onClick={closeMenu}
           style={{ background: 'rgba(0,0,0,0.5)' }}
         >
           <nav
@@ -111,7 +159,7 @@ export default function Layout({ children }) {
               <Link
                 key={item.path}
                 to={item.path}
-                onClick={() => setMenuOpen(false)}
+                onClick={closeMenu}
                 className={`block py-3 font-sans text-sm transition-colors ${
                   location.pathname === item.path
                     ? 'mango-text font-semibold'
@@ -134,6 +182,33 @@ export default function Layout({ children }) {
             </div>
           </nav>
         </div>
+        {menuBtnDock && (
+          <div
+            className="pointer-events-auto fixed z-[60] flex items-center justify-center"
+            style={{
+              top: menuBtnDock.top,
+              left: menuBtnDock.left,
+              width: menuBtnDock.width,
+              height: menuBtnDock.height,
+            }}
+          >
+            <button
+              type="button"
+              onClick={toggleMenu}
+              className={`flex h-8 w-8 flex-col justify-center gap-1.5 rounded-md shadow-sm ring-1 ring-outline-var/20 transition-all duration-300 dark:ring-white/10 ${
+                headerScrolled ? 'backdrop-blur-md' : 'backdrop-blur-none'
+              }`}
+              style={{ backgroundColor: 'rgba(var(--color-surface), 0.95)' }}
+              aria-label="Close menu"
+              aria-expanded={true}
+            >
+              <span className="block h-px bg-on-surface transition-all duration-300 rotate-45 translate-y-2" />
+              <span className="block h-px bg-on-surface transition-all duration-300 opacity-0" />
+              <span className="block h-px bg-on-surface transition-all duration-300 -rotate-45 -translate-y-2" />
+            </button>
+          </div>
+        )}
+        </>
       )}
 
       {/* Main content */}

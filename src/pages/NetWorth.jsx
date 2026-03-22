@@ -69,7 +69,7 @@ export default function NetWorth() {
               <p className="label-overline mb-1">Age</p>
               <input type="number" min={18} max={80} value={age}
                 onChange={e => setAge(Number(e.target.value))}
-                className="input-ghost text-center" />
+                className="input-ghost" />
             </div>
             <div>
               <p className="label-overline mb-1">Annual Income (₹)</p>

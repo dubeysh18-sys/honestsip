@@ -664,7 +664,7 @@
      PAGE SECTION — Gallery top margin
      ============================================================ */
   .page-section {
-    padding: 1.5rem 1.5rem 6rem;
+    padding: 0.5rem 1.5rem 6rem;
     max-width: 480px;
     margin: 0 auto;
   }
