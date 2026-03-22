@@ -20,10 +20,8 @@ export default function NumberInput({
     }
   }, [value]);
 
-  const handleFocus = (e) => {
+  const handleFocus = () => {
     isFocused.current = true;
-    // Select all text so typing immediately replaces the existing value
-    e.target.select();
   };
 
   const handleChange = (e) => {

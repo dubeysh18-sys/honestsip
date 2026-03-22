@@ -88,8 +88,8 @@ export default function CorpusWaterfall({
           className="w-full text-left p-1"
         >
           <div className="flex justify-between items-center group">
-            <p className="text-sm text-on-surface-var leading-relaxed pr-4 opacity-90">
-              {t('waterfall.teaser_start')} <strong className="text-on-surface">{formatINRLakh(grossCorpus)}</strong> {t('waterfall.teaser_mid')} <strong className="text-on-surface">{formatINRLakh(realTakeHome)}</strong> {t('waterfall.teaser_end')} <span className="mango-text group-hover:underline font-semibold ml-1">{t('waterfall.teaser_link')}</span>
+            <p className="text-sm text-white/80 leading-relaxed pr-4">
+              {t('waterfall.teaser_start')} <strong className="text-white font-semibold">{formatINRLakh(grossCorpus)}</strong> {t('waterfall.teaser_mid')} <strong className="text-white font-semibold">{formatINRLakh(realTakeHome)}</strong> {t('waterfall.teaser_end')} <span className="mango-text group-hover:underline font-semibold ml-1">{t('waterfall.teaser_link')}</span>
             </p>
           </div>
         </button>
@@ -98,17 +98,15 @@ export default function CorpusWaterfall({
       {/* Modal Popup */}
       {isExpanded && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 transition-all animate-fade-in"
-          style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 transition-all animate-fade-in bg-black/45 backdrop-blur-md dark:bg-black/[0.85] dark:backdrop-blur-[8px]"
           onClick={() => setIsExpanded(false)}
         >
           <div 
-            className="w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border border-[rgba(255,183,125,0.15)] shadow-2xl relative flex flex-col"
-            style={{ background: 'linear-gradient(165deg, #1A1A1A 0%, #200808 100%)' }}
+            className="waterfall-modal-panel w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl shadow-2xl relative flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="p-6 md:p-8 flex justify-between items-center border-b border-white/5">
+            <div className="p-6 md:p-8 flex justify-between items-center border-b border-outline-var/30 dark:border-white/5">
               <h3 className="font-serif text-2xl text-on-surface">{t('waterfall.title')}</h3>
               <button 
                 onClick={() => setIsExpanded(false)}
@@ -124,14 +122,14 @@ export default function CorpusWaterfall({
               <div className="min-w-full inline-block align-middle">
                 <table className="w-full text-left text-xs md:text-sm whitespace-nowrap">
                   <thead>
-                    <tr className="text-on-surface-var opacity-40 border-b border-white/5">
+                    <tr className="text-on-surface-var opacity-70 border-b border-outline-var/30 dark:opacity-40 dark:border-white/5">
                       <th className="pb-4 font-medium">{t('waterfall.col_what')}</th>
                       <th className="pb-4 font-medium text-right">{t('waterfall.col_amount')}</th>
                       <th className="pb-4 font-medium text-right">{t('waterfall.col_total')}</th>
                       <th className="pb-4 font-medium text-right">{t('waterfall.col_pct')}</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-outline-var/25 dark:divide-white/5">
                     {rows.map((r, i) => {
                       const pctNum = (Math.abs(r.amount) / grossCorpus) * 100;
                       const pctStr = pctNum.toFixed(1);
@@ -139,17 +137,17 @@ export default function CorpusWaterfall({
                       const isDeduction = r.type === 'deduction';
 
                       return (
-                        <tr key={i} className={isTotal ? 'font-semibold text-on-surface' : 'text-on-surface-var opacity-80'}>
+                        <tr key={i} className={isTotal ? 'font-semibold text-on-surface' : 'text-on-surface-var dark:opacity-80'}>
                           <td className="py-4 pr-4">
-                            <span className={r.tooltip ? 'border-b border-dashed border-white/20' : ''}>{r.label}</span>
+                            <span className={r.tooltip ? 'border-b border-dashed border-outline-var/50 dark:border-white/20' : ''}>{r.label}</span>
                           </td>
-                          <td className={`py-4 text-right font-mono ${isDeduction ? 'text-red-400/80' : ''}`}>
+                          <td className={`py-4 text-right font-mono ${isDeduction ? 'text-danger dark:text-red-400/80' : ''}`}>
                             {r.amount === 0 ? '₹0' : formatINR(r.amount)}
                           </td>
-                          <td className="py-4 text-right opacity-60 font-mono">
+                          <td className="py-4 text-right text-on-surface-var opacity-80 dark:opacity-60 font-mono">
                             {r.running !== null ? formatINRLakh(r.running) : '—'}
                           </td>
-                          <td className="py-4 text-right opacity-40 font-mono">
+                          <td className="py-4 text-right text-on-surface-var opacity-60 dark:opacity-40 font-mono">
                             {r.amount === grossCorpus ? '100%' : (r.running === null ? '—' : (pctStr === '0.0' ? '<0.1%' : `${pctStr}%`))}
                           </td>
                         </tr>
@@ -160,7 +158,7 @@ export default function CorpusWaterfall({
               </div>
 
               {/* Disclaimer Only */}
-              <p className="text-[10px] text-on-surface-var opacity-30 mt-8 pt-4 border-t border-white/5 leading-relaxed">
+              <p className="text-[10px] text-on-surface-var opacity-60 mt-8 pt-4 border-t border-outline-var/30 dark:opacity-30 dark:border-white/5 leading-relaxed">
                 {t('waterfall.footer_note')}
               </p>
             </div>

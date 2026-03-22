@@ -79,9 +79,9 @@ export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen" style={{ paddingTop: '5.5rem' }}>
+    <div className="min-h-screen" style={{ paddingTop: '1rem' }}>
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 pt-12 pb-10">
+      <div className="max-w-7xl mx-auto px-6 pb-10">
         <p className="label-overline text-primary mb-3">HonestSIP Financial Suite</p>
         <h1 className="font-serif text-5xl md:text-7xl text-on-surface leading-[1.1] mb-6">
           Precision Engineering <br />

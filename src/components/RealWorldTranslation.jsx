@@ -15,7 +15,7 @@ const TRANSLATIONS = [
     icon: '🏠',
     label: 'House Down Payment',
     getValue: (t) => `${t.housePercent}% of a 2BHK`,
-    sub: 'In your selected city',
+    sub: 'In your desired city',
   },
   {
     id: 'trips',

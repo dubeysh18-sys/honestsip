@@ -62,7 +62,6 @@ export default function RetirementPlanner() {
                   min={18}
                   max={70}
                   onChange={e => setCurrentAge(Number(e.target.value))}
-                  onFocus={e => e.target.select()}
                   className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
                   style={{ fontFamily: 'Newsreader, Georgia, serif' }}
                 />
@@ -78,7 +77,6 @@ export default function RetirementPlanner() {
                   min={currentAge + 1}
                   max={80}
                   onChange={e => setRetirementAge(Number(e.target.value))}
-                  onFocus={e => e.target.select()}
                   className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
                   style={{ fontFamily: 'Newsreader, Georgia, serif' }}
                 />

@@ -4,7 +4,6 @@
     "disclaimer": "HonestSIP calculators are for educational purposes only. Not financial advice. Tax calculations based on Budget 2024 rates.",
     "footer": "HonestSIP calculators are for educational and planning purposes only. They do not constitute financial advice. Mutual fund investments are subject to market risks. Tax calculations effective July 23, 2024 (Budget 2024). Peer benchmarking based on RBI, AMFI, WID India, PLFS data.",
     "items": {
-      "hub": "Hub",
       "forward": "Forward SIP Calculator",
       "learn": "Honest Masterclass",
       "reverse": "Reverse SIP Calculator",
@@ -106,7 +105,7 @@
       "surcharge": { "title": "− Surcharge (High Income)", "tip": "Extra tax for high earners (income > ₹50L). Charged on top of capital gains tax." },
       "post_tax": { "title": "Post-tax corpus", "tip": "" },
       "inflation": { "title": "− Inflation Erosion (Purchasing power loss)", "tip": "Not a fee — it is the purchasing power your corpus loses to rising prices over time." },
-      "real_takehome": { "title": "🏁 Your Real Take-Home (Today's value)", "tip": "What your money will actually buy when you withdraw it, measured in today's prices." }
+      "real_takehome": { "title": "Your Real Take-Home (Today's value)", "tip": "What your money will actually buy when you withdraw it, measured in today's prices." }
     },
     "tips": {
       "inflation": "Consider a mix of equity and inflation-linked assets. At current inflation, your money halves in purchasing power every 12 years.",

@@ -125,7 +125,6 @@ export default function OnTrack() {
                   min={18}
                   max={70}
                   onChange={e => setAge(Number(e.target.value))}
-                  onFocus={e => e.target.select()}
                   className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
                   style={{ fontFamily: 'Newsreader, Georgia, serif' }}
                 />
@@ -219,20 +218,6 @@ export default function OnTrack() {
           </div>
           <p className="text-xs text-on-surface-var opacity-40 mt-3">
             Adapted from Fidelity milestones, calibrated for Indian income levels and savings rates.
-          </p>
-        </div>
-
-        {/* Export Card button */}
-        <button onClick={handleExportCard} className="btn-primary w-full justify-center mb-4">
-          📤 Download Financial Twin Card
-        </button>
-
-        <div className="glass-card p-4">
-          <p className="label-overline lavender-text mb-2">Share on LinkedIn</p>
-          <p className="text-xs text-on-surface-var leading-relaxed">
-            "Just checked my financial health on HonestSIP.in — {results.overallGrade}.
-            At age {age} with a {results.nwActualMult}× net worth multiple.
-            The only honest finance calculator I've found for India 🇮🇳 #PersonalFinance #SIP"
           </p>
         </div>
 

@@ -78,7 +78,6 @@ export default function TermInsurance() {
                   min={18}
                   max={65}
                   onChange={e => setAge(Number(e.target.value))}
-                  onFocus={e => e.target.select()}
                   className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
                   style={{ fontFamily: 'Newsreader, Georgia, serif' }}
                 />

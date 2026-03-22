@@ -6,7 +6,6 @@ import compassLogo from '../assets/compass.png';
 
 
 const MENU_ITEMS = [
-  { path: '/',          labelKey: 'menu.items.hub' },
   { path: '/sip',       labelKey: 'menu.items.forward' },
   { path: '/reverse',   labelKey: 'menu.items.reverse' },
   { path: '/lumpsum',   labelKey: 'menu.items.lumpsum' },

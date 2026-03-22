@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import NumberInput from '../components/NumberInput';
 import SliderField from '../components/SliderField';
 import Select from '../components/Select';
-import { computeFinancialHealthScore, FH_WEIGHTS, formatINR } from '../lib/benchmarkData';
+import { computeFinancialHealthScore } from '../lib/benchmarkData';
 import { emergencyFundTarget, netWorthBenchmark } from '../lib/ruleEngine';
 import { EMERGENCY_FUND_BENCHMARKS } from '../lib/benchmarkData';
 
@@ -113,7 +113,6 @@ export default function FinancialHealthScore() {
                   min={18}
                   max={80}
                   onChange={e => setAge(Number(e.target.value))}
-                  onFocus={e => e.target.select()}
                   className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
                   style={{ fontFamily: 'Newsreader, Georgia, serif' }}
                 />

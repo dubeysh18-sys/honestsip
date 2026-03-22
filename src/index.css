@@ -198,6 +198,17 @@
    CUSTOM SLIDER — Pill handle, oversized touch target
    ============================================================ */
 @layer components {
+  /* Corpus waterfall modal — light surfaces in light theme, dramatic gradient in dark */
+  .waterfall-modal-panel {
+    background: linear-gradient(180deg, rgb(var(--color-surface-lowest)) 0%, rgb(var(--color-surface-low)) 100%);
+    border: 1px solid rgb(var(--color-outline-var) / 0.35);
+  }
+
+  [data-theme='dark'] .waterfall-modal-panel {
+    background: linear-gradient(165deg, #1a1a1a 0%, #200808 100%);
+    border-color: rgba(255, 183, 125, 0.15);
+  }
+
   .slider-field {
     @apply relative w-full;
   }
@@ -403,6 +414,9 @@
     letter-spacing: -0.02em;
     color: rgb(var(--color-on-surface));
     text-align: left;
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   /* ============================================================
@@ -661,7 +675,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      padding: 5.5rem 2rem 4rem;
+      padding: 1rem 2rem 4rem;
       align-items: start;
     }
   }

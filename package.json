@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build-favicon": "node scripts/build-favicon.mjs",
+    "prebuild": "node scripts/build-favicon.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -23,6 +25,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1"
   }
