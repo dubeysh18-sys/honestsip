@@ -1,5 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import JsonLd from '../seo/JsonLd';
+import { buildForwardSipJsonLd } from '../seo/forwardSipJsonLd';
 import SliderField from '../components/SliderField';
 import NumberInput from '../components/NumberInput';
 import Select from '../components/Select';
@@ -38,7 +40,7 @@ const SLAB_RATES = [
 ];
 
 export default function ForwardSIP() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [sip, setSip]           = useState(5000);
   const [years, setYears]       = useState(10);
   const [rate, setRate]         = useState(13);
@@ -125,13 +127,23 @@ export default function ForwardSIP() {
   const selectedAsset = ASSET_CLASSES.find(x => x.value === assetClass) || ASSET_CLASSES[0];
 
   return (
-    <div className="page-section pb-28 md:pb-12">
+    <article className="page-section pb-28 md:pb-12">
+      <JsonLd data={buildForwardSipJsonLd()} />
       <section aria-label="SIP Calculator Inputs">
         <div className="mb-8">
           <p className="label-overline text-on-surface-var mb-2">{t('forwardSIP.header_overline')}</p>
           <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-3 leading-tight">
-            {t('forwardSIP.header_title1')}<br />
-            <em className="italic">{t('forwardSIP.header_title2')}</em>
+            {i18n.language.startsWith('en') ? (
+              <>
+                SIP Calculator &amp; <em className="italic">Delay Cost Engine</em>
+              </>
+            ) : (
+              <>
+                {t('forwardSIP.header_title1')}
+                <br />
+                <em className="italic">{t('forwardSIP.header_title2')}</em>
+              </>
+            )}
           </h1>
           <p className="text-sm text-on-surface-var leading-relaxed">
             {t('forwardSIP.header_desc')}
@@ -274,10 +286,11 @@ export default function ForwardSIP() {
                 <p className="result-amount-sm lavender-text">{formatINRLakh(results.fvReal)}</p>
               </div>
             )}
-            <div className="inner-card">
+            <aside className="inner-card">
+              <p className="sr-only">Net Maturity SIP Value After Tax &amp; Inflation</p>
               <p className="label-overline text-on-surface-var mb-1">{t('forwardSIP.res_post_tax', { taxType: selectedAsset.label })}</p>
               <p className="result-amount-sm">{formatINRLakh(results.fvNet)}</p>
-            </div>
+            </aside>
           </div>
 
           {results.tax > 0 && (
@@ -302,6 +315,6 @@ export default function ForwardSIP() {
         </div>
         <FinancialTwin sipAmount={sip} context="monthly SIP" />
       </section>
-    </div>
+    </article>
   );
 }

@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ThemeToggle from './ThemeToggle';
 import compassLogo from '../assets/compass.png';
+import SeoController from '../seo/SeoController';
+import { useLocalizedPath } from '../hooks/useLocalizedPath';
+import { stripLocalePath, toLocalizedPath } from '../seo/localePaths';
 
 
 const MENU_ITEMS = [
@@ -25,8 +28,18 @@ const MENU_ITEMS = [
 
 const HEADER_BLUR_SCROLL_PX = 12;
 
-export default function Layout({ children }) {
+function menuItemActive(pathname, itemPath) {
+  const s = stripLocalePath(pathname);
+  if (itemPath === '/learn') return s.startsWith('/learn');
+  if (s === itemPath) return true;
+  if (itemPath !== '/' && s.startsWith(`${itemPath}/`)) return true;
+  return false;
+}
+
+export default function Layout() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const lp = useLocalizedPath();
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [menuBtnDock, setMenuBtnDock] = React.useState(null);
   const menuBtnWrapRef = React.useRef(null);
@@ -84,6 +97,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen text-on-surface transition-colors duration-300" style={{ backgroundColor: 'rgb(var(--color-surface))' }}>
+      <SeoController />
       {/* Top Nav */}
       <header
         className={`fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 pt-4 transition-all duration-300 ${
@@ -91,7 +105,7 @@ export default function Layout({ children }) {
         }`}
         style={{ backgroundColor: 'rgba(var(--color-surface), 0.95)' }}
       >
-        <Link to="/" className="flex items-center" aria-label="Home">
+        <Link to={lp('/')} className="flex items-center" aria-label="Home">
           <div className="flex items-center gap-2 font-serif text-2xl font-bold tracking-tight text-on-surface">
             <img 
               src={compassLogo} 
@@ -140,7 +154,11 @@ export default function Layout({ children }) {
               <select
                 className="select-ghost"
                 value={i18n.language.split('-')[0]}
-                onChange={(e) => i18n.changeLanguage(e.target.value)}
+                onChange={(e) => {
+                  const lng = e.target.value;
+                  i18n.changeLanguage(lng);
+                  navigate(toLocalizedPath(stripLocalePath(location.pathname), lng));
+                }}
               >
                 <option value="en">English</option>
                 <option value="hi">हिन्दी (Hindi)</option>
@@ -158,10 +176,10 @@ export default function Layout({ children }) {
             {MENU_ITEMS.map((item) => (
               <Link
                 key={item.path}
-                to={item.path}
+                to={item.path === '/learn' ? lp('/learn/what-is-a-sip') : lp(item.path)}
                 onClick={closeMenu}
                 className={`block py-3 font-sans text-sm transition-colors ${
-                  location.pathname === item.path
+                  menuItemActive(location.pathname, item.path)
                     ? 'mango-text font-semibold'
                     : 'text-on-surface-var hover:text-on-surface'
                 }`}
@@ -213,7 +231,7 @@ export default function Layout({ children }) {
 
       {/* Main content */}
       <main className="pt-32">
-        {children}
+        <Outlet />
       </main>
 
       {/* Desktop disclaimer */}

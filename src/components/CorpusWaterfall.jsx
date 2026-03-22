@@ -89,6 +89,9 @@ export default function CorpusWaterfall({
         >
           <div className="flex justify-between items-center group">
             <p className="text-sm text-white/80 leading-relaxed pr-4">
+              <span className="sr-only">
+                {`Your ${formatINRLakh(grossCorpus)} corpus becomes ${formatINRLakh(realTakeHome)} in today's money after inflation, tax & fund charges`}
+              </span>
               {t('waterfall.teaser_start')} <strong className="text-white font-semibold">{formatINRLakh(grossCorpus)}</strong> {t('waterfall.teaser_mid')} <strong className="text-white font-semibold">{formatINRLakh(realTakeHome)}</strong> {t('waterfall.teaser_end')} <span className="mango-text group-hover:underline font-semibold ml-1">{t('waterfall.teaser_link')}</span>
             </p>
           </div>

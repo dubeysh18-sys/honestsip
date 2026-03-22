@@ -106,8 +106,7 @@ export default function OnTrack() {
         <div className="mb-8">
           <p className="label-overline text-on-surface-var mb-2">Financial Audit</p>
           <h1 className="font-serif text-4xl text-on-surface mb-3 leading-tight">
-            Am I On<br />
-            <em className="italic">Track?</em>
+            Where do I stand financially for my age in India?
           </h1>
           <p className="text-sm text-on-surface-var leading-relaxed">
             5-dimension Red / Yellow / Green verdicts. India-specific peer benchmarks, not American studies.

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '../hooks/useLocalizedPath';
 
 // ─── Tool Catalogue ─────────────────────────────────────────────────────────
 
@@ -42,11 +43,12 @@ const DESCRIPTIONS = {
 
 function CalculatorTile({ path, category, labelKey }) {
   const { t } = useTranslation();
+  const lp = useLocalizedPath();
   const desc = DESCRIPTIONS[path] || '';
   
   return (
     <Link
-      to={path}
+      to={lp(path)}
       className="group block rounded-2xl p-6 transition-all duration-300 border border-outline-var/10 bg-surface-low hover:border-primary/30 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] flex flex-col h-full"
     >
       <div className="mb-4">
@@ -77,11 +79,12 @@ function CalculatorTile({ path, category, labelKey }) {
 
 export default function Home() {
   const { t } = useTranslation();
+  const lp = useLocalizedPath();
 
   return (
     <div className="min-h-screen" style={{ paddingTop: '1rem' }}>
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 pb-10">
+      <header className="max-w-7xl mx-auto px-6 pb-10">
         <p className="label-overline text-primary mb-3">HonestSIP Financial Suite</p>
         <h1 className="font-serif text-5xl md:text-7xl text-on-surface leading-[1.1] mb-6">
           Precision Engineering <br />
@@ -90,7 +93,7 @@ export default function Home() {
         <p className="font-sans text-on-surface-var text-lg max-w-2xl leading-relaxed opacity-60">
           A suite of formula-first tools designed to strip away the optimism bias and marketing math of traditional finance.
         </p>
-      </div>
+      </header>
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-6 pb-20">
@@ -101,7 +104,7 @@ export default function Home() {
 
           {/* Learn Tile - styled differently to stand out but fits grid */}
           <Link
-            to="/learn/what-is-a-sip"
+            to={lp('/learn/what-is-a-sip')}
             className="group block rounded-2xl p-6 transition-all duration-300 border border-primary/20 bg-gradient-to-br from-surface-low to-primary/5 hover:border-primary/50 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(var(--color-primary-rgb),0.15)] flex flex-col h-full relative overflow-hidden"
           >
             <div className="mb-4">

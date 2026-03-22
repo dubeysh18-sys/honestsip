@@ -3,11 +3,14 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getLearnChapters } from '../data/learnContent';
 import QuizBlock from '../components/QuizBlock';
+import JsonLd from '../seo/JsonLd';
+import { useLocalizedPath } from '../hooks/useLocalizedPath';
 
 export default function LearnChapter() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { i18n } = useTranslation();
+  const lp = useLocalizedPath();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const LEARN_CHAPTERS = getLearnChapters(i18n.language);
@@ -24,7 +27,7 @@ export default function LearnChapter() {
     return (
       <div className="page-section text-center py-20">
         <h2 className="text-2xl font-serif text-on-surface mb-4">Chapter Not Found</h2>
-        <button onClick={() => navigate('/learn')} className="px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-opacity">Return to Masterclass</button>
+        <button onClick={() => navigate(lp('/learn/what-is-a-sip'))} className="px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-opacity">Return to Masterclass</button>
       </div>
     );
   }
@@ -32,8 +35,34 @@ export default function LearnChapter() {
   const nextChapter = chapterIndex < LEARN_CHAPTERS.length - 1 ? LEARN_CHAPTERS[chapterIndex + 1] : null;
   const prevChapter = chapterIndex > 0 ? LEARN_CHAPTERS[chapterIndex - 1] : null;
 
+  const learnJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        headline: chapter.title,
+        description: chapter.byline,
+        inLanguage: i18n.language,
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: chapter.title,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: chapter.byline,
+            },
+          },
+        ],
+      },
+    ],
+  };
+
   return (
-    <div className="page-section pb-28 md:pb-12 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 relative">
+    <article className="page-section pb-28 md:pb-12 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 relative">
+      <JsonLd data={learnJsonLd} />
       
       {/* Mobile Sidebar Toggle */}
       <div className="md:hidden flex items-center justify-between bg-surface-low p-4 rounded-xl border border-outline-var/10 sticky top-20 z-20 shadow-md">
@@ -59,7 +88,7 @@ export default function LearnChapter() {
               return (
                 <Link 
                   key={c.id} 
-                  to={`/learn/${c.id}`}
+                  to={lp(`/learn/${c.id}`)}
                   className={`relative z-10 px-4 py-3 rounded-xl transition-all duration-200 border flex items-center gap-3 ${
                     isActive 
                       ? 'bg-surface-low border-primary/20 shadow-sm' 
@@ -108,13 +137,13 @@ export default function LearnChapter() {
 
           <div className="flex justify-between items-center mt-10 bg-surface-low p-5 rounded-xl border border-outline-var/10">
             {prevChapter ? (
-              <Link to={`/learn/${prevChapter.id}`} className="text-on-surface-var hover:text-on-surface transition-colors text-sm flex items-center gap-2">
+              <Link to={lp(`/learn/${prevChapter.id}`)} className="text-on-surface-var hover:text-on-surface transition-colors text-sm flex items-center gap-2">
                 <span>←</span> <span className="hidden sm:inline">{prevChapter.title}</span><span className="sm:hidden">Prev</span>
               </Link>
             ) : <div />}
             
             {nextChapter ? (
-              <Link to={`/learn/${nextChapter.id}`} className="text-primary font-bold text-[0.95rem] text-right flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <Link to={lp(`/learn/${nextChapter.id}`)} className="text-primary font-bold text-[0.95rem] text-right flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <span>Next <span className="hidden sm:inline">Chapter</span></span> <span>→</span>
               </Link>
             ) : (
@@ -125,6 +154,6 @@ export default function LearnChapter() {
           </div>
         </div>
       </main>
-    </div>
+    </article>
   );
 }
