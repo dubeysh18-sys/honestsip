@@ -51,14 +51,9 @@ export default function GoalPlanner() {
     <div className="page-section pb-28 md:pb-12">
       <section aria-label="Goal Planner Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Goal Engineering</p>
           <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-3 leading-tight">
-            New Family<br />
-            <em className="italic">Runway</em>
+            Goal Planner<br />
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            Pick a life goal. We calculate the monthly SIP with honest inflation defaults.
-          </p>
         </div>
 
         <div className="section-card mb-4">

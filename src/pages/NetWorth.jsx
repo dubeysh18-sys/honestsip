@@ -52,14 +52,9 @@ export default function NetWorth() {
     <div className="page-section pb-28 md:pb-12">
       <section aria-label="Net Worth Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Wealth Snapshot</p>
           <h1 className="font-serif text-4xl text-on-surface mb-3 leading-tight">
-            Net Worth<br />
-            <em className="italic">Snapshot</em>
+            Net Worth Snapshot<br />
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            Assets minus liabilities, benchmarked to your age and income cohort.
-          </p>
         </div>
 
         <div className="section-card mb-4">

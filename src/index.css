@@ -105,7 +105,7 @@
 
   .cta-card {
     border-radius: 1.5rem;
-    padding: 1.5rem;
+    padding: 1rem;
     background: rgb(var(--color-surface-low));
   }
 
@@ -392,7 +392,7 @@
   .inner-card {
     background: rgb(var(--color-surface-lowest));
     border-radius: 0.75rem;
-    padding: 1.25rem;
+    padding: 0.5rem;
   }
 
   /* ============================================================
@@ -409,7 +409,7 @@
 
   .result-amount-sm {
     font-family: 'Newsreader', Georgia, serif;
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: rgb(var(--color-on-surface));

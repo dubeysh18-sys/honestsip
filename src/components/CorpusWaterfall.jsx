@@ -123,13 +123,13 @@ export default function CorpusWaterfall({
             {/* Modal Body: Scrollable Table */}
             <div className="flex-1 overflow-auto p-4 md:p-8">
               <div className="min-w-full inline-block align-middle">
-                <table className="w-full text-left text-xs md:text-sm whitespace-nowrap">
+                <table className="w-full text-left text-xs md:text-sm">
                   <thead>
                     <tr className="text-on-surface-var opacity-70 border-b border-outline-var/30 dark:opacity-40 dark:border-white/5">
-                      <th className="pb-4 font-medium">{t('waterfall.col_what')}</th>
-                      <th className="pb-4 font-medium text-right">{t('waterfall.col_amount')}</th>
-                      <th className="pb-4 font-medium text-right">{t('waterfall.col_total')}</th>
-                      <th className="pb-4 font-medium text-right">{t('waterfall.col_pct')}</th>
+                      <th className="pb-4 w-0.5 font-medium align-bottom min-w-0">{t('waterfall.col_what')}</th>
+                      <th className="pb-4 w-0 pl-3 font-medium text-right align-bottom whitespace-nowrap">{t('waterfall.col_amount')}</th>
+                      <th className="pb-4 w-0 pl-3 font-medium text-right align-bottom whitespace-nowrap">{t('waterfall.col_total')}</th>
+                      <th className="pb-4 w-0 pl-2 font-medium text-right align-bottom whitespace-nowrap">{t('waterfall.col_pct')}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-outline-var/25 dark:divide-white/5">
@@ -141,16 +141,16 @@ export default function CorpusWaterfall({
 
                       return (
                         <tr key={i} className={isTotal ? 'font-semibold text-on-surface' : 'text-on-surface-var dark:opacity-80'}>
-                          <td className="py-4 pr-4">
-                            <span className={r.tooltip ? 'border-b border-dashed border-outline-var/50 dark:border-white/20' : ''}>{r.label}</span>
+                          <td className="py-4 pr-4 min-w-0 align-top">
+                            <span className={`block ${r.tooltip ? 'border-b border-dashed border-outline-var/50 dark:border-white/20' : ''}`}>{r.label}</span>
                           </td>
-                          <td className={`py-4 text-right font-mono ${isDeduction ? 'text-danger dark:text-red-400/80' : ''}`}>
+                          <td className={`py-4 w-0 pl-3 text-right font-mono align-top whitespace-nowrap ${isDeduction ? 'text-danger dark:text-red-400/80' : ''}`}>
                             {r.amount === 0 ? '₹0' : formatINR(r.amount)}
                           </td>
-                          <td className="py-4 text-right text-on-surface-var opacity-80 dark:opacity-60 font-mono">
+                          <td className="py-4 w-0 pl-3 text-right text-on-surface-var opacity-80 dark:opacity-60 font-mono align-top whitespace-nowrap">
                             {r.running !== null ? formatINRLakh(r.running) : '—'}
                           </td>
-                          <td className="py-4 text-right text-on-surface-var opacity-60 dark:opacity-40 font-mono">
+                          <td className="py-4 w-0 pl-2 text-right text-on-surface-var opacity-60 dark:opacity-40 font-mono align-top whitespace-nowrap">
                             {r.amount === grossCorpus ? '100%' : (r.running === null ? '—' : (pctStr === '0.0' ? '<0.1%' : `${pctStr}%`))}
                           </td>
                         </tr>

@@ -8,7 +8,7 @@ import {
 } from '../lib/ruleEngine';
 
 const ASSET_CLASSES = [
-  { value: 'equity',      label: 'Equity Mutual Funds', rate: 13 },
+  { value: 'equity',      label: 'Equity ( Stocks )', rate: 13 },
   { value: 'gold',        label: 'Gold / SGB / ETFs',   rate: 9  },
   { value: 'real-estate', label: 'Real Estate / REITs', rate: 10 },
   { value: 'fd',          label: 'Fixed Deposit / Debt', rate: 7  },
@@ -74,14 +74,9 @@ export default function LumpsumCalculator() {
     <div className="page-section pb-28 md:pb-12">
       {/* Header */}
       <div className="mb-6">
-        <p className="label-overline text-on-surface-var mb-2">One-Time Investment</p>
         <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-3 leading-tight">
-          Lumpsum<br />
-          <em className="italic">Growth Calculator</em>
+          Lumpsum Calculator<br />
         </h1>
-        <p className="text-sm text-on-surface-var leading-relaxed">
-          How much will a one-time investment grow? See the compounding power of a single deployment.
-        </p>
       </div>
 
       {/* Inputs */}

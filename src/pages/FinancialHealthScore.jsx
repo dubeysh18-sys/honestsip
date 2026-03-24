@@ -72,14 +72,9 @@ export default function FinancialHealthScore() {
     <div className="page-section pb-28 md:pb-12">
       <section aria-label="Financial Health Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Financial Wellness</p>
           <h1 className="font-serif text-4xl text-on-surface mb-3 leading-tight">
-            Financial Health<br />
-            <em className="italic">Score</em>
+            Financial Health Score<br />
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            6-dimension composite score. Weighted by real impact, not theoretical benchmarks.
-          </p>
         </div>
 
         <div className="section-card mb-4">

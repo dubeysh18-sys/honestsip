@@ -101,14 +101,9 @@ export default function ReverseSIP() {
       {/* Left — Inputs */}
       <section aria-label="Reverse SIP Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Wealth Engineering</p>
           <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-3 leading-tight">
-            The Reverse<br />
-            <em className="italic">Wealth Architect</em>
+            Reverse SIP Calculator<br />
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            Define your endgame. We calculate the monthly precision required to reach your final financial milestone.
-          </p>
         </div>
 
         <div className="section-card mb-4">
@@ -183,7 +178,7 @@ export default function ReverseSIP() {
             label="Asset Class"
             value="equity"
             onChange={() => {}}
-            options={[{ value: 'equity', label: 'Equity Mutual Funds' }]}
+            options={[{ value: 'equity', label: 'Equity ( Stocks )' }]}
           />
 
           <SliderField

@@ -28,14 +28,9 @@ export default function EmergencyFund() {
     <div className="page-section pb-28 md:pb-12">
       <section aria-label="Emergency Fund Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Financial Safety Net</p>
           <h1 className="font-serif text-4xl text-on-surface mb-3 leading-tight">
-            Emergency Fund<br />
-            <em className="italic">Calculator</em>
+            Emergency Fund Calculator<br />
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            Your safety net — sized to your employment risk, not a generic "3 months" rule.
-          </p>
         </div>
 
         <div className="section-card mb-4">

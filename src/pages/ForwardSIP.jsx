@@ -14,11 +14,11 @@ import {
   monthlyRate, sipFV, stepUpSIPFV, lumpSumFV,
   costOfWaiting, yearByYearGrowth, taxEngine,
   totalInvestedFlat, totalInvestedStepUp, computeWaterfall,
-  inflationAdjustedGoal, formatINR, formatINRLakh, selfTest,
+  formatINR, formatINRLakh, selfTest,
 } from '../lib/ruleEngine';
 
 const ASSET_CLASSES = [
-  { value: 'equity',      label: 'Equity Mutual Funds', rateDirect: 13, rateRegular: 12 },
+  { value: 'equity',      label: 'Equity ( Stocks )', rateDirect: 13, rateRegular: 12 },
   { value: 'gold',        label: 'Gold / SGB / ETFs',   rateDirect: 9,  rateRegular: 8 },
   { value: 'real-estate', label: 'Real Estate / REITs', rateDirect: 10, rateRegular: 9 },
   { value: 'oil',         label: 'Oil / Commodities',   rateDirect: 8,  rateRegular: 7 },
@@ -48,7 +48,6 @@ export default function ForwardSIP() {
   const [lumpSum, setLumpSum]   = useState(0);
   const [freq, setFreq]         = useState('monthly');
   const [inflation, setInflation] = useState(6);
-  const [showInflation, setShowInflation] = useState(true);
   
   const [assetClass, setAssetClass] = useState('equity');
   const [fundType, setFundType]     = useState('direct');
@@ -131,11 +130,10 @@ export default function ForwardSIP() {
       <JsonLd data={buildForwardSipJsonLd()} />
       <section aria-label="SIP Calculator Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">{t('forwardSIP.header_overline')}</p>
           <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-3 leading-tight">
             {i18n.language.startsWith('en') ? (
               <>
-                SIP Calculator &amp; <em className="italic">Delay Cost Engine</em>
+                SIP Calculator
               </>
             ) : (
               <>
@@ -145,31 +143,30 @@ export default function ForwardSIP() {
               </>
             )}
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            {t('forwardSIP.header_desc')}
-          </p>
         </div>
 
         <div className="section-card mb-4 mt-2 md:mt-0">
-          <NumberInput
-            label={t('forwardSIP.inputs_title')}
-            value={sip}
-            onChange={setSip}
-            hint={t('forwardSIP.inputs_hint')}
-          />
-          <div className="flex gap-2 mb-5">
-            <button
-              className={`freq-btn ${freq === 'monthly' ? 'active' : 'inactive'}`}
-              onClick={() => setFreq('monthly')}
-            >
-              {t('forwardSIP.monthly')}
-            </button>
-            <button
-              className={`freq-btn ${freq === 'quarterly' ? 'active' : 'inactive'}`}
-              onClick={() => setFreq('quarterly')}
-            >
-              {t('forwardSIP.quarterly')}
-            </button>
+          <div className="mb-5">
+            <p className="label-overline mb-2">{t('forwardSIP.inputs_title')}</p>
+            <div className="flex flex-wrap items-end gap-3 min-w-0">
+              <NumberInput
+                hideLabel
+                wrapperClassName="min-w-0 flex-1 mb-0"
+                value={sip}
+                onChange={setSip}
+              />
+              <Select
+                value={freq}
+                onChange={setFreq}
+                options={[
+                  { value: 'monthly', label: t('forwardSIP.monthly') },
+                  { value: 'quarterly', label: t('forwardSIP.quarterly') },
+                ]}
+                portaled
+                wrapperClassName="mb-0 shrink-0 min-w-[8.25rem]"
+                ariaLabel={t('forwardSIP.freq_aria')}
+              />
+            </div>
           </div>
           <SliderField
             label={t('forwardSIP.duration')}
@@ -206,25 +203,6 @@ export default function ForwardSIP() {
             hint={t('forwardSIP.lumpsum_hint')}
           />
           
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <p className="label-overline">{t('forwardSIP.inflation')}</p>
-              <p className="text-xs text-on-surface-var opacity-60 mt-0.5">
-                {t('forwardSIP.inflation_desc')}
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="mango-text text-sm">{inflation}%</span>
-              <button
-                className={`toggle-track ${showInflation ? 'active' : ''}`}
-                onClick={() => setShowInflation(!showInflation)}
-                aria-label={`Inflation adjustment ${showInflation ? 'on' : 'off'}`}
-              >
-                <span className="toggle-thumb" />
-              </button>
-            </div>
-          </div>
-          {showInflation && (
             <SliderField
               label={t('forwardSIP.inflation')}
               value={inflation}
@@ -233,20 +211,21 @@ export default function ForwardSIP() {
               unit="%"
               onChange={setInflation}
             />
-          )}
 
           <div className="grid grid-cols-2 gap-4">
             <Select
               label="Asset Class"
               value={assetClass}
               onChange={setAssetClass}
-              options={ASSET_CLASSES.map(x => ({ value: x.value, label: x.label }))}
+              options={ASSET_CLASSES.map((x) => ({ value: x.value, label: x.label }))}
+              portaled
             />
             <Select
               label="Fund Type"
               value={fundType}
               onChange={setFundType}
-              options={FUND_TYPES.map(x => ({ value: x.value, label: x.label }))}
+              options={FUND_TYPES.map((x) => ({ value: x.value, label: x.label }))}
+              portaled
             />
           </div>
 
@@ -280,24 +259,16 @@ export default function ForwardSIP() {
               <p className="label-overline sage-text mb-1">{t('forwardSIP.res_gains')}</p>
               <p className="result-amount-sm sage-text">{formatINRLakh(results.gains)}</p>
             </div>
-            {showInflation && (
               <div className="inner-card">
                 <p className="label-overline lavender-text mb-1">{t('forwardSIP.res_real', { inflation })}</p>
                 <p className="result-amount-sm lavender-text">{formatINRLakh(results.fvReal)}</p>
               </div>
-            )}
             <aside className="inner-card">
               <p className="sr-only">Net Maturity SIP Value After Tax &amp; Inflation</p>
               <p className="label-overline text-on-surface-var mb-1">{t('forwardSIP.res_post_tax', { taxType: selectedAsset.label })}</p>
               <p className="result-amount-sm">{formatINRLakh(results.fvNet)}</p>
             </aside>
           </div>
-
-          {results.tax > 0 && (
-            <p className="text-xs text-on-surface-var opacity-50 mt-3">
-              {t('forwardSIP.res_tax', { tax: formatINR(results.tax) })}
-            </p>
-          )}
         </div>
 
         <CorpusWaterfall waterfallData={results.waterfallData} assetClass={assetClass} />

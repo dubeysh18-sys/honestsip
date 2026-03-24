@@ -42,14 +42,9 @@ export default function ChildEducation() {
     <div className="page-section pb-28 md:pb-12">
       <div className="md:col-span-2 grid md:grid-cols-2 gap-8 mb-2">
         <div>
-          <p className="label-overline text-on-surface-var mb-2">{t('childEdu.header_overline')}</p>
           <h1 className="font-serif text-4xl text-on-surface mb-3 leading-tight">
-            {t('childEdu.header_title1')}<br />
-            <em className="italic">{t('childEdu.header_title2')}</em>
+            Child's Education Fund Planner<br />
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            {t('childEdu.header_desc', { rate: results.annualInfRate })}
-          </p>
         </div>
 
         <div className="section-card">

@@ -9,6 +9,8 @@ export default function NumberInput({
   max,
   placeholder = '0',
   hint,
+  hideLabel = false,
+  wrapperClassName = 'mb-5',
 }) {
   const [localValue, setLocalValue] = useState(value === 0 ? '' : String(value));
   const isFocused = useRef(false);
@@ -39,9 +41,11 @@ export default function NumberInput({
   };
 
   return (
-    <div className="mb-5">
-      <p className="label-overline mb-2">{label}</p>
-      <div className="flex items-baseline gap-2 border-b border-outline-var/20 focus-within:border-primary pb-1 transition-colors">
+    <div className={wrapperClassName}>
+      {!hideLabel && label ? (
+        <p className="label-overline mb-2">{label}</p>
+      ) : null}
+      <div className="flex w-full items-baseline gap-2 border-b border-outline-var/20 pb-1 transition-colors focus-within:border-primary">
         {prefix && (
           <span className="font-sans text-on-surface-var text-lg">
             {prefix}
@@ -58,7 +62,7 @@ export default function NumberInput({
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={placeholder}
-          className="flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
+          className="min-w-0 flex-1 bg-transparent text-on-surface font-serif text-2xl focus:outline-none appearance-none"
           style={{ fontFamily: 'Newsreader, Georgia, serif' }}
         />
       </div>

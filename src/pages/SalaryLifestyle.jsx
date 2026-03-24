@@ -59,7 +59,6 @@ export default function SalaryLifestyle() {
     <div className="page-section pb-28 md:pb-12">
       <section aria-label="Salary Lifestyle Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Lifestyle Alignment</p>
           <h1 className="font-serif text-4xl text-on-surface mb-3 leading-tight">
             Salary-to-Lifestyle<br />
             <em className="italic">Alignment</em>

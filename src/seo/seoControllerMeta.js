@@ -14,7 +14,7 @@ const PAGE_META = {
   },
   '/sip': {
     title: {
-      en: 'Forward SIP Calculator & Delay Cost Engine - Maturity SIP Value After Tax',
+      en: 'SIP Calculator',
       hi: 'एसआईपी कैलकुलेटर (SIP Calculator Hindi)',
       mr: 'एसआयपी कॅल्क्युलेटर (SIP Calculator Marathi)',
     },

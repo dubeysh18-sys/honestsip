@@ -41,14 +41,9 @@ export default function RetirementPlanner() {
     <div className="page-section pb-28 md:pb-12">
       <section aria-label="Retirement Planner Inputs">
         <div className="mb-8">
-          <p className="label-overline text-on-surface-var mb-2">Retirement Engineering</p>
           <h1 className="font-serif text-4xl md:text-5xl text-on-surface mb-3 leading-tight">
-            The Retirement<br />
-            <em className="italic">Architect</em>
+            Retirement Planner<br />
           </h1>
-          <p className="text-sm text-on-surface-var leading-relaxed">
-            Retire at {retirementAge} with ₹{(monthlyIncome / 1000).toFixed(0)}K/month income. Two-phase calculation: accumulation + withdrawal.
-          </p>
         </div>
 
         <div className="section-card mb-4">

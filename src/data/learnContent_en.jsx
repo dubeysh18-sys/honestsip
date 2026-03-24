@@ -107,7 +107,7 @@ export const enChapters = [
     ),
     quiz: {
       question: "When you invest in ________, you become a partial owner of a business, making it a high-return, high-volatility asset class designed primarily to beat inflation.",
-      options: ["Corporate Bonds", "Equity Mutual Funds", "Fixed Deposits", "Sovereign Gold Bonds"],
+      options: ["Corporate Bonds", "Equity ( Stocks )", "Fixed Deposits", "Sovereign Gold Bonds"],
       answer: 1 
     }
   },
@@ -227,7 +227,7 @@ export const enChapters = [
       </>
     ),
     quiz: {
-      question: "Under the Long-Term Capital Gains (LTCG) rules for equity mutual funds, profits up to ________ per financial year are completely exempt from tax, provided the investment was held for more than one year.",
+      question: "Under the Long-Term Capital Gains (LTCG) rules for Equity ( Stocks ), profits up to ________ per financial year are completely exempt from tax, provided the investment was held for more than one year.",
       options: ["₹50,000", "₹1.25 Lakhs", "₹2.5 Lakhs", "₹5 Lakhs"],
       answer: 1 // 1.25 L
     }

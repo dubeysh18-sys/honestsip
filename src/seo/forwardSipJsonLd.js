@@ -1,6 +1,6 @@
 import { SITE_ORIGIN } from './siteConfig';
 
-/** SoftwareApplication + FinancialProduct (TER, STT, Budget 2024 LTCG, inflation) for Forward SIP. */
+/** SoftwareApplication + FinancialProduct (TER, STT, Budget 2024 LTCG, inflation) for SIP. */
 export function buildForwardSipJsonLd() {
   const base = SITE_ORIGIN.replace(/\/$/, '');
   return {
@@ -8,7 +8,7 @@ export function buildForwardSipJsonLd() {
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'HonestSIP Forward SIP Calculator',
+        name: 'HonestSIP SIP Calculator',
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'Web Browser',
         url: `${base}/sip`,
