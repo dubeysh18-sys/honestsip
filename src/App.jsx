@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { StaticRouter } from 'react-router-dom/server';
 import Layout from './components/Layout';
 import LocaleShell from './components/LocaleShell';
 import LearnRedirect from './components/LearnRedirect';
@@ -57,35 +58,48 @@ function renderPageRoutes() {
   );
 }
 
-export default function App() {
-  const baseUrl = import.meta.env.BASE_URL || '/'
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route
+          element={
+            <Suspense fallback={<Loader />}>
+              <Outlet />
+            </Suspense>
+          }
+        >
+          <Route path="/" element={<LocaleShell lang="en" />}>
+            {renderPageRoutes()}
+          </Route>
+          <Route path="/hi" element={<LocaleShell lang="hi" />}>
+            {renderPageRoutes()}
+          </Route>
+          <Route path="/mr" element={<LocaleShell lang="mr" />}>
+            {renderPageRoutes()}
+          </Route>
+        </Route>
+      </Route>
+    </Routes>
+  );
+}
+
+export default function App({ ssrPathname = '/' }) {
+  const baseUrl = import.meta.env.BASE_URL || '/';
   const basename =
-    baseUrl === '/' ? undefined : baseUrl.replace(/\/$/, '')
+    baseUrl === '/' ? undefined : baseUrl.replace(/\/$/, '');
+
+  if (import.meta.env.SSR) {
+    return (
+      <StaticRouter location={ssrPathname} basename={basename}>
+        <AppRoutes />
+      </StaticRouter>
+    );
+  }
 
   return (
     <BrowserRouter basename={basename}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route
-            element={
-              <Suspense fallback={<Loader />}>
-                <Outlet />
-              </Suspense>
-            }
-          >
-            {/* Routes must be direct children of <Route>; a wrapper component breaks RR6 matching. */}
-            <Route path="/" element={<LocaleShell lang="en" />}>
-              {renderPageRoutes()}
-            </Route>
-            <Route path="/hi" element={<LocaleShell lang="hi" />}>
-              {renderPageRoutes()}
-            </Route>
-            <Route path="/mr" element={<LocaleShell lang="mr" />}>
-              {renderPageRoutes()}
-            </Route>
-          </Route>
-        </Route>
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

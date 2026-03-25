@@ -45,9 +45,10 @@ export default function Layout() {
   const menuBtnWrapRef = React.useRef(null);
   const [headerScrolled, setHeaderScrolled] = React.useState(false);
   const { t, i18n } = useTranslation();
-  const [theme, setTheme] = React.useState(
-    () => localStorage.getItem('theme') || 'dark'
-  );
+  const [theme, setTheme] = React.useState(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return window.localStorage.getItem('theme') || 'dark';
+  });
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -64,7 +65,11 @@ export default function Layout() {
 
   React.useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    try {
+      window.localStorage.setItem('theme', theme);
+    } catch {
+      /* ignore quota / private mode */
+    }
   }, [theme]);
 
   const closeMenu = () => {

@@ -1,4 +1,4 @@
-# Build and deploy the Vite app to GitHub Pages.
+# Build and deploy the Vike (Vite) app to GitHub Pages.
 # Repo → Settings → Pages → Build and deployment → Source: GitHub Actions.
 name: Deploy to GitHub Pages
 
@@ -24,7 +24,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # Vike / rolldown expect Node >= 20.19 (22.x is safe on ubuntu-latest).
+          node-version: '22'
           cache: npm
 
       - name: Install dependencies
@@ -51,8 +52,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Vike emits the static client site under dist/client (not dist/).
       - name: SPA fallback (deep links on GitHub Pages)
-        run: cp dist/index.html dist/404.html
+        run: cp dist/client/index.html dist/client/404.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -60,7 +62,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist/client
 
   deploy:
     environment:
