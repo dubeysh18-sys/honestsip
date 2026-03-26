@@ -52,9 +52,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Vike emits the static client site under dist/client (not dist/).
-      - name: SPA fallback (deep links on GitHub Pages)
-        run: cp dist/client/index.html dist/client/404.html
+      # # Vike emits the static client site under dist/client (not dist/).
+      # - name: SPA fallback (deep links on GitHub Pages)
+      #   run: cp dist/client/index.html dist/client/404.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
