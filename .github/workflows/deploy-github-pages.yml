@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate sitemap
+        run: npm run sitemap
+
       # Custom domain (CNAME) is served at site root — base must be `/`, not `/repo/`.
       # Optional override: Repo → Settings → Variables → Actions → VITE_BASE_PATH (e.g. / or /repo/)
       - name: Set Vite base path for Pages
@@ -52,9 +55,23 @@ jobs:
       - name: Build
         run: npm run build
 
-      # # Vike emits the static client site under dist/client (not dist/).
-      # - name: SPA fallback (deep links on GitHub Pages)
-      #   run: cp dist/client/index.html dist/client/404.html
+      # After prerender, root `index.html` should exist under dist/client.
+      # Keep `404.html` as fallback for any non-pre-rendered deep links.
+      - name: SPA fallback + choose Pages root
+        run: |
+          set -euo pipefail
+          if [[ -f dist/client/index.html ]]; then
+            ROOT=dist/client
+          elif [[ -f dist/index.html ]]; then
+            ROOT=dist
+          else
+            echo '::error::No index.html after build. Ensure pages/+config enables prerender (e.g. partial: true) and pages/app opts in.'
+            find dist -type f -name '*.html' 2>/dev/null | head -50 || true
+            ls -la dist dist/client 2>/dev/null || true
+            exit 1
+          fi
+          cp "$ROOT/index.html" "$ROOT/404.html"
+          echo "PAGES_ROOT=$ROOT" >> "$GITHUB_ENV"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -62,7 +79,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/client
+          path: ${{ env.PAGES_ROOT }}
 
   deploy:
     environment:

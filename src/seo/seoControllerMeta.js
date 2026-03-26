@@ -43,7 +43,11 @@ const LEARN_META = {
 };
 
 const DEFAULT_META = {
-  title: { en: 'HonestSIP', hi: 'HonestSIP', mr: 'HonestSIP' },
+  title: {
+    en: "HonestSIP — India's Smartest SIP Calculator",
+    hi: 'एसआईपी कैलकुलेटर (SIP Calculator Hindi)',
+    mr: 'एसआयपी कॅल्क्युलेटर (SIP Calculator Marathi)',
+  },
   description:
     "India's most honest SIP & personal finance calculator suite. Educational tools only — not financial advice.",
 };
