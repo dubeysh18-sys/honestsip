@@ -38,9 +38,10 @@ export function lumpSumFV(L, i, n) {
 
 // ---------------------------------------------------------------------------
 // 3.4 Step-Up SIP (Graduated Annuity) — Year-by-year loop
-// PRD §3.4: FV_k = P×(1+g)^(k-1) × [((1+i)^(n-12(k-1))-1)/i] × (1+i)
-// This is exactly: sipFV(P×(1+g)^(k-1), i, monthsRemaining)
-// Total = Σ FV_k  (k = 1 to Y)
+// Each year k uses installment P×(1+g)^(k-1) for exactly one year (12 or 4 periods).
+// FV at end of year k from that year's stream = sipFV(P_k, i, periodsInYear).
+// Then grow that lump to maturity: × (1+i)^(nTotal − k×periodsInYear).
+// Total = Σ_k sipFV(P_k, i, periodsInYear) × (1+i)^(nTotal − k×periodsInYear)
 // ---------------------------------------------------------------------------
 export function stepUpSIPFV(P, g, annualRate, years, freq = 'monthly') {
   const isQuarterly = freq === 'quarterly';
@@ -50,9 +51,9 @@ export function stepUpSIPFV(P, g, annualRate, years, freq = 'monthly') {
   let total = 0;
   for (let k = 1; k <= years; k++) {
     const sipThisYear = P * Math.pow(1 + g, k - 1);
-    const periodsRemaining = nTotal - periodsInYear * (k - 1);
-    if (periodsRemaining <= 0) break;
-    total += sipFV(sipThisYear, i, periodsRemaining);
+    const fvEndOfYearK = sipFV(sipThisYear, i, periodsInYear);
+    const periodsAfterYearK = nTotal - k * periodsInYear;
+    total += fvEndOfYearK * Math.pow(1 + i, periodsAfterYearK);
   }
   return total;
 }
@@ -582,11 +583,13 @@ export function selfTest() {
   const fv8000flat = sipFV(8000, i12, 120);
   assert('Flat SIP FV ₹8000 12% 10yr', fv8000flat, 1792287, 0.01);
 
-  // 3.4 Step-up SIP: P=₹8000, g=10%, r=12%, 10yr
-  // Correct answer per PRD §3.4 formula: ~₹1.0843 Cr (verified manually)
-  // Note: ₹18.5L was WRONG — that is the flat ₹8000 SIP value, not step-up
+  // 3.4 Step-up SIP: P=₹8000, g=10%, r=12%, 10yr (year-block then carry-forward)
   const fvStepUp = stepUpSIPFV(8000, 0.10, 0.12, 10);
-  assert('StepUp SIP ₹8000 10% 12% 10yr', fvStepUp, 10843000, 0.01);
+  assert('StepUp SIP ₹8000 10% 12% 10yr', fvStepUp, 2615119, 0.01);
+
+  // Regression: 1% annual step-up must not double-count remaining-month SIP streams
+  const fvStepUpSmall = stepUpSIPFV(5000, 0.01, 0.13, 10);
+  assert('StepUp SIP ₹5000 1% 13% 10yr', fvStepUpSmall, 1224093, 0.01);
 
   // 3.8 Cost of Waiting: P=₹8000, r=12%, 20yr → Δ ≈ ₹79,000
   const cow = costOfWaiting(8000, 0.12, 240);
